@@ -1,35 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import * as React from 'react';
+import { Link } from 'react-router-dom';
 import imgLogo from './../../images/admin/logo.png';
-import FirstStep from './firstSteps/first';
-import SecondStep from './firstSteps/second';
-import ThirdStep from './firstSteps/third';
 
 export default function FirstAccess(){
-    const [activeTab, setActiveTab] = useState("first");
-
-    function ActiveStep(props){
-        const step = props.step;
-        if (step === "first") {
-            return <FirstStep/>;
-        }else if(step === "second") {
-            return <SecondStep/>;
-        }else if(step === "third") {
-            return <ThirdStep/>;
-        }
-    }
-
-    const handleStep1 = () => {
-        setActiveTab("first");
-    };
-    const handleStep2 = () => {
-        setActiveTab("second");
-    };
-    const handleStep3 = () => {
-        setActiveTab("third");
-    };
-
     return (
-        <section id="firstAccess" className='Admin'>
+        <section id="firstAccess">
             <div className='container'>
                 <div className='row'>
                     <div className='col-md-8 offset-md-2'>
@@ -37,27 +12,55 @@ export default function FirstAccess(){
                             <img src={imgLogo} alt="Logo" className='img-fluid'/>
                             <p>Preencha os dados abaixo para fazer o seu cadastro</p>
                             <div className='flex-center'>
-                                <a className={activeTab === "first" ? "active group" : "group"} onClick={handleStep1}>
+                                <div className='group'>
                                     <span className='number'>1</span>
-                                    <span>Dados do usuário</span>
-                                </a>
+                                    <p>Dados do usuário</p>
+                                </div>
                                 <span className='trace'></span>
-                                <a className={activeTab === "second" ? "active group" : "group"} onClick={handleStep2}>
+                                <div className='group disabled'>
                                     <span className='number'>2</span>
-                                    <span>Dados da Instituição</span>
-                                </a>
+                                    <p>Dados da Instituição</p>
+                                </div>
                                 <span className='trace'></span>
-                                <a className={activeTab === "third" ? "active group" : "group"} onClick={handleStep3}>
+                                <div className='group disabled'>
                                     <span className='number'>3</span>
-                                    <span>Envio</span>
-                                </a>
+                                    <p>Envio</p>
+                                </div>
                             </div>
-                            <ActiveStep step={activeTab} />
+                            <form action='' method='POST'>
+                                <div className='row'>
+                                    <div className='col-md-6'>
+                                        <div class="form-group">
+                                            <label for="nome">Nome Completo</label>
+                                            <input type="text" class="form-control" name="nome" id="nome" aria-describedby="nomeHelpId" placeholder=""/>
+                                            <small id="nomeHelpId" class="form-text text-muted">Nome Incorreto!</small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="senha">Senha</label>
+                                            <input type="text" name="senha" id="senha" class="form-control" placeholder="" aria-describedby="senhaHelpId"/>
+                                            <small id="senhaHelpId" class="text-muted">Senha Incorreta!</small>
+                                        </div>
+                                    </div>
+                                    <div className='col-md-6'>
+                                        <div class="form-group">
+                                            <label for="email">E-mail</label>
+                                            <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelpId" placeholder=""/>
+                                            <small id="emailHelpId" class="form-text text-muted">E-mail Incorreto!</small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="confirmacaoSenha">Confirmação de Senha</label>
+                                            <input type="text" name="confirmacaoSenha" id="confirmacaoSenha" class="form-control" placeholder="" aria-describedby="confirmacaoSenhaHelpId"/>
+                                            <small id="confirmacaoSenhaHelpId" class="text-muted">Confirmação de Senha Incorreta!</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success">PRÓXIMO PASSO</button>
+                                <Link to='/admin/login' className='link-first-access'>Voltar ao Login</Link>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.4501 17.8496L3.8501 12.2496L4.9251 11.1746L9.4501 15.6996L19.0501 6.09961L20.1251 7.17461L9.4501 17.8496Z" fill="white"/></svg>
         </section>
     );
 }

@@ -326,12 +326,448 @@ header{
     }
 }
 
-#instituicao{
+#instituicao-pagina{
+    #banner{
+        background-color: #3DBD8A;
+        padding: 64px 0 44px;
+        border-radius: 0px 0px 0px 80px;
+        h1{
+            font-style: normal;
+            font-weight: 700;
+            font-size: 48px;
+            line-height: 60px;
+            color: #fff;
+            margin-bottom: 35px;
+        }
+        p{
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 32px;
+            color: #E6E6E6;
+            margin-bottom: 40px;
+        }
+    }
 
+    #visu-instituicoes{
+        padding: 50px 0;
+        h2{
+            font-style: normal;
+            font-weight: 700;
+            font-size: 64px;
+            line-height: 88px;
+            color: #2E2E2E;
+            margin-bottom: 40px;
+        }
+        .btn-pesquisar{
+            background: #277A59;
+            border-radius: 8px;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 24px;
+            color: #FFFFFF;
+            padding: 12px;
+            width: 100%;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            margin-left: 15px;
+            border: 1px solid #277A59;
+        }
+        .btn-carregar-mais{
+            background: #53C351;
+            border-radius: 8px;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 18px;
+            color: #FFFFFF;
+            padding: 12px;
+            width: 100%;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            margin-left: 15px;
+            border: 1px solid #53C351;
+        }
+
+        .card-instituicoes{
+
+            background: #FFFFFF;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 50px 0;
+            gap: 16px;
+
+            .img-largura{
+                display: block;
+                width: 100%;
+                height: 304px;
+                img{
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: fill;
+                }
+            }
+    
+            .card-desc-instituicao{
+    
+                p{
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 32px;
+                    color: #666666;
+                    margin: 0;
+                }
+    
+                h5{
+                    font-style: normal;
+                    font-weight: 700;
+                    font-size: 24px;
+                    line-height: 32px;
+                }
+    
+            }
+    
+        }
+
+        form{
+            margin-top: 20px;
+            .form-group{
+                margin-bottom: 32px;
+                position: relative;
+            }
+            input, select{
+                background: #C4C4C4;
+                display: block;
+                padding: 10px 15px;
+                width: 100%;
+                color: #000000;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 18px;
+                border-radius: 2px;
+                &::placeholder{
+                    color: #000000;
+                }
+            }
+            label{
+                color: #000000;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 18px;
+                position: absolute;
+                left: 15px;
+                top: 10px;
+                transition: ease-in-out 0.3s all;
+            }
+            .text-muted{
+                display: none;
+            }
+            select{
+                background: #C4C4C4 url("data:image/svg+xml,%3Csvg width='23' height='14' viewBox='0 0 23 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='10.523' y1='12.8036' x2='21.8367' y2='1.48993' stroke='black' stroke-width='2'/%3E%3Cpath d='M1 2L11.6066 12.6066' stroke='black' stroke-width='2'/%3E%3C/svg%3E%0A") 95% 50% no-repeat;
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                position: relative;
+            }
+           
+        }
+    }
+
+}
+
+#instituicao-conteudo{
+    #banner{
+        background-color: #3DBD8A;
+        padding: 64px 0 44px;
+        border-radius: 0px 0px 0px 80px;
+        h1{
+            font-style: normal;
+            font-weight: 700;
+            font-size: 48px;
+            line-height: 60px;
+            color: #fff;
+            margin-bottom: 35px;
+        }
+        p{
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 32px;
+            color: #E6E6E6;
+            margin-bottom: 40px;
+        }
+    }
+
+    #content-instuicao{
+
+        margin: 60px 0px;
+
+        ul{
+            list-style: none;
+            display: flex;
+            align-items: center;
+            margin: 0px;
+            padding: 0px;
+
+            li{
+
+                display: inline-block;
+                padding: 25px 30px;
+                border-radius: 25px 25px 0px 0px;
+                background: #E7F1EF;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 28px;
+                line-height: 34px;
+                text-align: center;
+                color: #000000;
+                width: 296px;
+                cursor: pointer;
+
+                &.active{
+
+                    background: #3DBD8A;
+                    font-style: normal;
+                    font-weight: 700;
+                    font-size: 28px;
+                    line-height: 34px;
+                    text-align: center;
+                    color: #FFFFFF;
+
+                }
+
+            }
+
+        }
+
+        .content-tab{
+
+            padding: 97px 57px;
+            background-color: #3DBD8A;
+            border-radius: 0px 0px 25px 25px;
+
+            p{
+                font-style: normal;
+                font-weight: 400;
+                font-size: 20px;
+                line-height: 34px;
+                color: #FFFFFF;
+            }
+
+            &.disabled{
+                display: none;
+            }
+
+            img.rounded{
+
+                border-radius: 8px;
+
+            }
+            
+            .title-tab{
+
+                p{
+
+                    font-weight: 700;
+                    font-size: 64px;
+                    line-height: 88px;
+                    color: #FFFFFF;
+
+                }
+
+            }
+
+            .desc-location{
+
+                p{
+
+                    font-weight: 400;
+                    font-size: 20px;
+                    line-height: 34px;
+                    color: #FFFFFF;
+
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+#campanhas-pagina{
+    #banner{
+        background-color: #3DBD8A;
+        padding: 64px 0 44px;
+        border-radius: 0px 0px 0px 80px;
+        h1{
+            font-style: normal;
+            font-weight: 700;
+            font-size: 48px;
+            line-height: 60px;
+            color: #fff;
+            margin-bottom: 35px;
+        }
+        p{
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 32px;
+            color: #E6E6E6;
+            margin-bottom: 40px;
+        }
+    }
+
+    #visu-campanhas{
+        padding: 50px 0;
+        h2{
+            font-style: normal;
+            font-weight: 700;
+            font-size: 64px;
+            line-height: 88px;
+            color: #2E2E2E;
+            margin-bottom: 40px;
+        }
+        .btn-pesquisar{
+            background: #277A59;
+            border-radius: 8px;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 24px;
+            color: #FFFFFF;
+            padding: 12px;
+            width: 100%;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            margin-left: 15px;
+            border: 1px solid #277A59;
+        }
+        .btn-carregar-mais{
+            background: #53C351;
+            border-radius: 8px;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 18px;
+            color: #FFFFFF;
+            padding: 12px;
+            width: 100%;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            margin-left: 15px;
+            border: 1px solid #53C351;
+        }
+
+        .card-campanhas{
+
+            background: #FFFFFF;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 50px 0;
+            gap: 16px;
+
+            .img-largura{
+                display: block;
+                width: 100%;
+                height: 304px;
+                img{
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: fill;
+                }
+            }
+    
+            .card-desc-campanhas{
+    
+                p{
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 32px;
+                    color: #666666;
+                    margin: 0;
+                }
+
+                a{
+                    text-decoration: none !important;
+                    color: #666666;
+                }
+    
+                h5{
+                    font-style: normal;
+                    font-weight: 700;
+                    font-size: 24px;
+                    line-height: 32px;
+                }
+    
+            }
+    
+        }
+
+        form{
+            margin-top: 20px;
+            .form-group{
+                margin-bottom: 32px;
+                position: relative;
+            }
+            input, select{
+                background: #C4C4C4;
+                display: block;
+                padding: 10px 15px;
+                width: 100%;
+                color: #000000;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 18px;
+                border-radius: 2px;
+                &::placeholder{
+                    color: #000000;
+                }
+            }
+            label{
+                color: #000000;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 18px;
+                position: absolute;
+                left: 15px;
+                top: 10px;
+                transition: ease-in-out 0.3s all;
+            }
+            .text-muted{
+                display: none;
+            }
+            select{
+                background: #C4C4C4 url("data:image/svg+xml,%3Csvg width='23' height='14' viewBox='0 0 23 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='10.523' y1='12.8036' x2='21.8367' y2='1.48993' stroke='black' stroke-width='2'/%3E%3Cpath d='M1 2L11.6066 12.6066' stroke='black' stroke-width='2'/%3E%3C/svg%3E%0A") 95% 50% no-repeat;
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                position: relative;
+            }
+           
+        }
+    }
+
+}
+
+#instituicao{
     margin-top: 50px;
     padding: 60px 0;
     background: linear-gradient(180deg, #E2EEEC -5.54%, rgba(227, 239, 237, 0) 100%);
-
     h2{
         font-style: normal;
         font-weight: 700;
@@ -355,7 +791,6 @@ header{
         text-decoration: none;
     }
     .card-instituicoes{
-
         background: #FFFFFF;
         border-radius: 16px;
         display: flex;
@@ -363,9 +798,18 @@ header{
         align-items: flex-start;
         padding: 16px;
         gap: 16px;
-
+        .img-largura{
+            display: block;
+            width: 100%;
+            height: 304px;
+            img{
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: fill;
+            }
+        }
         .card-desc-instituicao{
-
             p{
                 font-style: normal;
                 font-weight: 400;
@@ -374,18 +818,14 @@ header{
                 color: #666666;
                 margin: 0;
             }
-
             h5{
                 font-style: normal;
                 font-weight: 700;
                 font-size: 24px;
                 line-height: 32px;
             }
-
         }
-
     }
-    
 }
 
 #contato{

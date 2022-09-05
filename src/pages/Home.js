@@ -142,15 +142,17 @@ export default function Home(){
                             <h2>Veja as Instituições</h2>
                         </div>
                         <div className='col-md-2'>
-                            <Link to="/instituicoes/ver-todas" className='btn-instituicoes'>Ver todas</Link>
+                            <Link to="/instituicoes" className='btn-instituicoes'>Ver todas</Link>
                         </div>
                     </div>
                     <div className='row'>
                         <div className='col-md-4'>
                             <div className='card-instituicoes'>
-                                <Link to="/instituicoes/adventista-do-setimo-dia" className='barra-link'>
-                                    <img src={LogoIgrAdventista} className="img-fluid" alt='Logo Igr Adventista'/>
-                                </Link>
+                                <div className='img-largura'>
+                                    <Link to="/instituicao/adventista-do-setimo-dia" className='barra-link'>
+                                        <img src={LogoIgrAdventista} className="img-fluid" alt='Logo Igr Adventista'/>
+                                    </Link>
+                                </div>
                                 <div className='card-desc-instituicao'>
                                     <p>São Paulo</p>
                                     <h5>Igreja Adventista do Sétimo Dia</h5>
@@ -160,9 +162,11 @@ export default function Home(){
                         </div>
                         <div className='col-md-4'>
                             <div className='card-instituicoes'>
-                                <Link to="/instituicoes/igreja-catolica-diocese-jundiai" className='barra-link'>
-                                    <img src={LogoSocCatolica} className="img-fluid" alt='Logo Soc Catolica'/>
-                                </Link>
+                                <div className='img-largura'>
+                                    <Link to="/instituicao/igreja-catolica-diocese-jundiai" className='barra-link'>
+                                        <img src={LogoSocCatolica} className="img-fluid" alt='Logo Soc Catolica'/>
+                                    </Link>
+                                </div>
                                 <div className='card-desc-instituicao'>
                                     <p>Jundiaí, São Paulo</p>
                                     <h5>Igreja Católica - Diocese de Jundiaí</h5>
@@ -172,9 +176,11 @@ export default function Home(){
                         </div>
                         <div className='col-md-4'>
                             <div className='card-instituicoes'>
-                                <Link to="/instituicoes/anjos-do-resgate" className='barra-link'>
-                                    <img src={LogoAnjResgate} className="img-fluid" alt='Logo Anj Resgate'/>
-                                </Link>
+                                <div className='img-largura'>
+                                    <Link to="/instituicao/anjos-do-resgate" className='barra-link'>
+                                        <img src={LogoAnjResgate} className="img-fluid" alt='Logo Anj Resgate'/>
+                                    </Link>
+                                </div>
                                 <div className='card-desc-instituicao'>
                                     <p>Itu, São Paulo</p>
                                     <h5>Anjos do Resgate</h5>
