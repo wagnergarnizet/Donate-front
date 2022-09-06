@@ -1,24 +1,31 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import BannerMobile from './../images/banner-mobile.png';
-import BannerDesktop from './../images/banner-desktop.png';
-import IconHeart from './../images/icon-heart.png';
-import LogoAdra from './../images/adra-logo.jpg';
-import Vicentinos from './../images/vicentinos.jpg';
-import ResgateCriancas from './../images/resgate-criancas.jpg';
-import LerAcolher from './../images/ler-acolher.jpg';
 import LogoIgrAdventista from './../images/igreja-adventista.jpg';
 import LogoSocCatolica from './../images/igreja-catolica.jpg';
 import LogoAnjResgate from './../images/anjos-resgate.jpg';
 
+function focusInput(e){
+    var label = document.querySelector('label[for=' + e.target.id + ']');
+    label.style.top  = "-26px";
+    label.style.left = "0px";
+}
+
+function blurInput(e){
+    var label = document.querySelector('label[for=' + e.target.id + ']');
+    if(e.target.value == ""){
+        label.style.top = "10px";
+        label.style.left = "15px";
+    }
+}
+
 export default function Instituicoes(){
     return (
-        <section id="home">
+        <section id="instituicao-pagina">
             <section id="banner">
                 <div className='container'>
                     <div className='row'>
                         <div className='col-md-6'>
-                            <h1>Faça você mesmo a diferença!!!</h1>
+                            <h1>Faça você mesmo a diferença!</h1>
                             <p>Conheça nossas campanhas e saiba como ajudar os projetos sociais que estão na nossa plataforma, a sua ajuda será muito bem vinda!</p>
                             <div className='row buttons'>
                                 <div className='col-md-4'>
@@ -55,7 +62,14 @@ export default function Instituicoes(){
                                 <h3>Missão</h3>
                                 <p>Criar uma plataforma simples com o objetivo de organizar o recolhimento e estoque das doações recebidas pelas instituições beneficentes.</p>
                             </div>
-                        </div>
+                                <div className='col-md-2'>
+                                    <button className='btn-pesquisar' type='submit'>Pesquisar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div className='row'>
                         <div className='col-md-4'>
                             <div className='card'>
                                 <span className='icon'>
@@ -73,6 +87,10 @@ export default function Instituicoes(){
                                 <h3>Valores</h3>
                                 <p>Integridade, confiabilidade e transparência.</p>
                             </div>
+                                <div className='card-desc-instituicao'>
+                                    <p>Jundiaí, São Paulo</p>
+                                    <h5>Igreja Católica - Diocese de Jundiaí</h5>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipis cing elit. Integer gravida vitae ultrices urna et porttitor malesuada. Hendrerit diam netus.</p>
                         </div>
                     </div>
                 </div>
@@ -88,69 +106,13 @@ export default function Instituicoes(){
                         </div>
                     </div>
                     <div className='row'>
-                        <div className='col-md-8'>
-                            <div className='card-destaque'>
-                                <img src={LogoAdra} className="img-fluid" alt='Logo Adra'/>
-                                <Link to="/campanhas/adventista-do-setimo-dia" className='barra-link'>
-                                    <p>Adventista do Sétimo Dia</p>
-                                    <h3>ADRA - Agência Adventista de Desenvolvimento e Recursos assistenciais</h3>
-                                    <span className='icon'>
-                                        <svg width="20" height="34" viewBox="0 0 20 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.780518 3.4775L14.2567 16.9999L0.780518 30.5224L3.39334 33.1442L19.4824 16.9999L3.39334 0.855713L0.780518 3.4775Z" fill="white"/></svg>
-                                    </span>
-                                </Link>
-                            </div>
-                        </div>
-                        <div className='col-md-4'>
-                            <div className='card'>
-                                <img src={Vicentinos} className="img-fluid" alt='Vincentinos'/>
-                                <Link to="/campanhas/igreja-catolica-diocese-jundiai" className='barra-link'>
-                                    <p>Igreja Católica - Diocese de Jundiaí</p>
-                                    <h3>Vicentinos</h3>
-                                    <span className='icon'>
-                                        <svg width="20" height="34" viewBox="0 0 20 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.780518 3.4775L14.2567 16.9999L0.780518 30.5224L3.39334 33.1442L19.4824 16.9999L3.39334 0.855713L0.780518 3.4775Z" fill="white"/></svg>
-                                    </span>
-                                </Link>
-                            </div>
-                            <div className='card'>
-                                <img src={ResgateCriancas} className="img-fluid" alt='Resgate de crianças'/>
-                                <Link to="/campanhas/anjos-do-resgate" className='barra-link'>
-                                    <p>Anjos do Resgate</p>
-                                    <h3>Resgate de crianças</h3>
-                                    <span className='icon'>
-                                        <svg width="20" height="34" viewBox="0 0 20 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.780518 3.4775L14.2567 16.9999L0.780518 30.5224L3.39334 33.1442L19.4824 16.9999L3.39334 0.855713L0.780518 3.4775Z" fill="white"/></svg>
-                                    </span>
-                                </Link>
-                            </div>
-                            <div className='card'>
-                                <img src={LerAcolher} className="img-fluid" alt='Ler e acolher'/>
-                                <Link to="/campanhas/pilares" className='barra-link'>
-                                    <p>Pilares</p>
-                                    <h3>Ler e acolher</h3>
-                                    <span className='icon'>
-                                        <svg width="20" height="34" viewBox="0 0 20 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.780518 3.4775L14.2567 16.9999L0.780518 30.5224L3.39334 33.1442L19.4824 16.9999L3.39334 0.855713L0.780518 3.4775Z" fill="white"/></svg>
-                                    </span>
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section id='instituicao'>
-                <div className='container'>
-                    <div className='row'>
-                        <div className='col-md-10'>
-                            <h2>Veja as Instituições</h2>
-                        </div>
-                        <div className='col-md-2'>
-                            <Link to="/instituicoes/ver-todas" className='btn-instituicoes'>Ver todas</Link>
-                        </div>
-                    </div>
-                    <div className='row'>
                         <div className='col-md-4'>
                             <div className='card-instituicoes'>
-                                <Link to="/instituicoes/adventista-do-setimo-dia" className='barra-link'>
-                                    <img src={LogoIgrAdventista} className="img-fluid" alt='Logo Igr Adventista'/>
-                                </Link>
+                                <div className='img-largura'>
+                                    <Link to="/instituicao/adventista-do-setimo-dia" className='barra-link'>
+                                        <img src={LogoIgrAdventista} className="img-fluid" alt='Logo Igr Adventista'/>
+                                    </Link>
+                                </div>
                                 <div className='card-desc-instituicao'>
                                     <p>São Paulo</p>
                                     <h5>Igreja Adventista do Sétimo Dia</h5>
@@ -160,9 +122,11 @@ export default function Instituicoes(){
                         </div>
                         <div className='col-md-4'>
                             <div className='card-instituicoes'>
-                                <Link to="/instituicoes/igreja-catolica-diocese-jundiai" className='barra-link'>
-                                    <img src={LogoSocCatolica} className="img-fluid" alt='Logo Soc Catolica'/>
-                                </Link>
+                                <div className='img-largura'>
+                                    <Link to="/instituicao/igreja-catolica-diocese-jundiai" className='barra-link'>
+                                        <img src={LogoSocCatolica} className="img-fluid" alt='Logo Soc Catolica'/>
+                                    </Link>
+                                </div>
                                 <div className='card-desc-instituicao'>
                                     <p>Jundiaí, São Paulo</p>
                                     <h5>Igreja Católica - Diocese de Jundiaí</h5>
@@ -172,9 +136,11 @@ export default function Instituicoes(){
                         </div>
                         <div className='col-md-4'>
                             <div className='card-instituicoes'>
-                                <Link to="/instituicoes/anjos-do-resgate" className='barra-link'>
-                                    <img src={LogoAnjResgate} className="img-fluid" alt='Logo Anj Resgate'/>
-                                </Link>
+                                <div className='img-largura'>
+                                    <Link to="/instituicao/anjos-do-resgate" className='barra-link'>
+                                        <img src={LogoAnjResgate} className="img-fluid" alt='Logo Anj Resgate'/>
+                                    </Link>
+                                </div>
                                 <div className='card-desc-instituicao'>
                                     <p>Itu, São Paulo</p>
                                     <h5>Anjos do Resgate</h5>
@@ -183,6 +149,58 @@ export default function Instituicoes(){
                             </div>
                         </div>
                     </div>
+
+                    <div className='row'>
+                        <div className='col-md-4'>
+                            <div className='card-instituicoes'>
+                                <div className='img-largura'>
+                                    <Link to="/instituicao/adventista-do-setimo-dia" className='barra-link'>
+                                        <img src={LogoIgrAdventista} className="img-fluid" alt='Logo Igr Adventista'/>
+                                    </Link>
+                                </div>
+                                <div className='card-desc-instituicao'>
+                                    <p>São Paulo</p>
+                                    <h5>Igreja Adventista do Sétimo Dia</h5>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipis cing elit. Integer gravida vitae ultrices urna et porttitor malesuada. Hendrerit diam netus.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-md-4'>
+                            <div className='card-instituicoes'>
+                                <div className='img-largura'>
+                                    <Link to="/instituicao/igreja-catolica-diocese-jundiai" className='barra-link'>
+                                        <img src={LogoSocCatolica} className="img-fluid" alt='Logo Soc Catolica'/>
+                                    </Link>
+                                </div>
+                                <div className='card-desc-instituicao'>
+                                    <p>Jundiaí, São Paulo</p>
+                                    <h5>Igreja Católica - Diocese de Jundiaí</h5>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipis cing elit. Integer gravida vitae ultrices urna et porttitor malesuada. Hendrerit diam netus.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-md-4'>
+                            <div className='card-instituicoes'>
+                                <div className='img-largura'>
+                                    <Link to="/instituicao/anjos-do-resgate" className='barra-link'>
+                                        <img src={LogoAnjResgate} className="img-fluid" alt='Logo Anj Resgate'/>
+                                    </Link>
+                                </div>
+                                <div className='card-desc-instituicao'>
+                                    <p>Itu, São Paulo</p>
+                                    <h5>Anjos do Resgate</h5>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipis cing elit. Integer gravida vitae ultrices urna et porttitor malesuada. Hendrerit diam netus.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className='row'>
+                        <div className='col-md-2 offset-md-5'>
+                            <Link to="/instituicoes" className='btn-carregar-mais'>Carregar Mais</Link>
+                        </div>
+                    </div>
+
                 </div>
             </section>
         </section>

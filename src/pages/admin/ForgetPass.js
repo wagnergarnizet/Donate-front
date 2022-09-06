@@ -4,7 +4,7 @@ import imgLogo from './../../images/admin/logo.png';
 
 export default function ForgetPass(){
     return (
-        <section id="login" className='Admin'>
+        <section id="login">
             <div className='container'>
                 <div className='row'>
                     <div className='col-md-4 offset-md-4'>

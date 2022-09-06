@@ -2,23 +2,26 @@ import * as React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './scss/admin/App.scss';
 import Navbar from './pages/admin/helpers/Navbar';
-import Campanhas from './pages/admin/Campanhas';
-import Usuarios from './pages/admin/Usuarios';
-import Produtos from './pages/admin/Produtos';
-import Estoque from './pages/admin/Estoque';
+import Footer from './pages/admin/helpers/Footer';
 
 function App() {
   return (
-    <div className="Admin">
+    <div className="App">
         <Navbar></Navbar>
         <Routes>
-            <Route path="/campanhas" element={ <Campanhas/> }></Route>
-            <Route path="/usuarios" element={ <Usuarios/> }></Route>
-            <Route path="/produtos" element={ <Produtos/> }></Route>
-            <Route path="/estoque" element={ <Estoque/> }></Route>
+            <Route path="/" element={ <Dashboard/> }></Route>
         </Routes>
+        <Footer></Footer>
     </div>
   );
+}
+
+function Dashboard(){
+    return (
+        <div>
+            <h1>Dashboard</h1>
+        </div>
+    );
 }
 
 export default App;

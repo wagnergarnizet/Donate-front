@@ -1,15 +1,15 @@
 import * as React from 'react';
+import { NavLink, Link } from 'react-router-dom';
 import BgImage from './../../images/bg-contato.png';
 
 function focusInput(e){
     var label = document.querySelector('label[for=' + e.target.id + ']');
-    console.log(label);
-    label.style.top = "-26px";
-    label.style.left = "0";
+    label.style.top  = "-26px";
+    label.style.left = "0px";
 }
 function blurInput(e){
     var label = document.querySelector('label[for=' + e.target.id + ']');
-    if(e.target.value === ""){
+    if(e.target.value == ""){
         label.style.top = "10px";
         label.style.left = "15px";
     }
