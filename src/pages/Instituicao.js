@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import LogoIgrAdventista from './../images/igreja-adventista.jpg';
 import MapImg from './../images/map.png';
+import LogoAdra from './../images/adra-logo.jpg';
 import { tab } from '@testing-library/user-event/dist/tab';
 
 function focusInput(e){
@@ -111,9 +112,53 @@ export default function Instituicao(){
                             </div>
 
                             <div id="campanhas" className="content-tab disabled">
-                                <p>
-                                    Campanhas
-                                </p>
+                                <div className="row">
+                                    <div className="title-tab">
+                                        <p>Campanhas</p>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <div className="card-mini-campanhas">
+                                            <img src={LogoAdra} className="img-fluid" alt='Logo Adra'/>
+                                            <Link to="/campanhas/adventista-do-setimo-dia" className='barra-link'>
+                                                <p>Adventista do Sétimo Dia</p>
+                                                <h3>Recursos assistenciais </h3>
+                                                <span className='icon'>
+                                                    <svg width="20" height="34" viewBox="0 0 20 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.780518 3.4775L14.2567 16.9999L0.780518 30.5224L3.39334 33.1442L19.4824 16.9999L3.39334 0.855713L0.780518 3.4775Z" fill="white"/></svg>
+                                                </span>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <div className="card-mini-campanhas">
+                                            <img src={LogoAdra} className="img-fluid" alt='Logo Adra'/>
+                                            <Link to="/campanhas/adventista-do-setimo-dia" className='barra-link'>
+                                                <p>Adventista do Sétimo Dia</p>
+                                                <h3>Recursos assistenciais </h3>
+                                                <span className='icon'>
+                                                    <svg width="20" height="34" viewBox="0 0 20 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.780518 3.4775L14.2567 16.9999L0.780518 30.5224L3.39334 33.1442L19.4824 16.9999L3.39334 0.855713L0.780518 3.4775Z" fill="white"/></svg>
+                                                </span>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <div className="card-mini-campanhas">
+                                            <img src={LogoAdra} className="img-fluid" alt='Logo Adra'/>
+                                            <Link to="/campanhas/adventista-do-setimo-dia" className='barra-link'>
+                                                <p>Adventista do Sétimo Dia</p>
+                                                <h3>Recursos assistenciais </h3>
+                                                <span className='icon'>
+                                                    <svg width="20" height="34" viewBox="0 0 20 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.780518 3.4775L14.2567 16.9999L0.780518 30.5224L3.39334 33.1442L19.4824 16.9999L3.39334 0.855713L0.780518 3.4775Z" fill="white"/></svg>
+                                                </span>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className='col-md-2 offset-md-5'>
+                                        <Link to="/campanhas" className='btn-carregar-mais'>Carregar Mais</Link>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>

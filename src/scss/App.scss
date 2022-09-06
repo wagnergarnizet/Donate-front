@@ -597,6 +597,63 @@ header{
 
             }
 
+            .card-mini-campanhas{
+                position: relative;
+                border: 0;
+                margin-bottom: 12px;
+                a.barra-link{
+                    background-color: #53C351;
+                    padding: 24px;
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    display: block;
+                    border-radius: 0px 0 0 16px;
+                    text-decoration: none;
+                    img{
+                        width: 100%;
+                    }
+                    span.icon{
+                        position: absolute;
+                        top: calc(50% - 15px);
+                        right: 25px;
+                    }
+                    p{
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 16px;
+                        line-height: 32px;
+                        color: #E6E6E6;
+                        margin: 0;
+                    }
+                    h3{
+                        font-weight: 700;
+                        font-size: 24px;
+                        line-height: 32px;
+                        color: #FFFFFF;
+                    }
+                }
+            }
+
+            .btn-carregar-mais{
+                background: #53C351;
+                border-radius: 8px;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 14px;
+                line-height: 18px;
+                color: #FFFFFF;
+                padding: 12px;
+                width: 100%;
+                display: block;
+                text-align: center;
+                text-decoration: none;
+                margin-left: 15px;
+                margin-top: 15px;
+                border: 1px solid #53C351;
+            }
+
         }
 
     }
