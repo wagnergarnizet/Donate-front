@@ -18,7 +18,7 @@ export default function Instituicoes(){
                 <div className='container'>
                     <div className='row'>
                         <div className='col-md-6'>
-                            <h1>Faça você mesmo a diferença!</h1>
+                            <h1>Faça você mesmo a diferença!!!</h1>
                             <p>Conheça nossas campanhas e saiba como ajudar os projetos sociais que estão na nossa plataforma, a sua ajuda será muito bem vinda!</p>
                             <div className='row buttons'>
                                 <div className='col-md-4'>
