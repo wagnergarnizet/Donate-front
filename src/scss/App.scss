@@ -660,6 +660,146 @@ header{
 
 }
 
+#campanha-conteudo{
+    #banner{
+        background-color: #3DBD8A;
+        padding: 64px 0 44px;
+        border-radius: 0px 0px 0px 80px;
+        h1{
+            font-style: normal;
+            font-weight: 700;
+            font-size: 48px;
+            line-height: 60px;
+            color: #fff;
+            margin-bottom: 35px;
+        }
+        p{
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 32px;
+            color: #E6E6E6;
+            margin-bottom: 40px;
+        }
+    }
+
+    #content-campanha{
+
+        margin: 60px 0px;
+
+        ul{
+            list-style: none;
+            display: flex;
+            align-items: center;
+            margin: 0px;
+            padding: 0px;
+
+            li{
+
+                display: inline-block;
+                padding: 25px 30px;
+                border-radius: 25px 25px 0px 0px;
+                background: #E7F1EF;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 28px;
+                line-height: 34px;
+                text-align: center;
+                color: #000000;
+                width: 296px;
+                cursor: pointer;
+
+                &.active{
+
+                    background: #3DBD8A;
+                    font-style: normal;
+                    font-weight: 700;
+                    font-size: 28px;
+                    line-height: 34px;
+                    text-align: center;
+                    color: #FFFFFF;
+
+                }
+
+            }
+
+        }
+
+        .content-tab{
+
+            padding: 75px 54px;
+            background-color: #3DBD8A;
+            border-radius: 0px 0px 25px 25px;
+
+            p{
+                font-style: normal;
+                font-weight: 400;
+                font-size: 20px;
+                line-height: 34px;
+                color: #FFFFFF;
+            }
+
+            &.disabled{
+                display: none;
+            }
+
+            img.rounded{
+
+                border-radius: 8px;
+
+            }
+            
+            .title-tab{
+
+                padding: 30px 0px;
+
+                p{
+
+                    font-weight: 700;
+                    font-size: 64px;
+                    line-height: 88px;
+                    color: #FFFFFF;
+
+                }
+
+            }
+
+            .desc-location{
+
+                p{
+
+                    font-weight: 400;
+                    font-size: 20px;
+                    line-height: 34px;
+                    color: #FFFFFF;
+
+                }
+
+            }
+
+            .btn-carregar-mais{
+                background: #FA5050;
+                border-radius: 8px;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 14px;
+                line-height: 18px;
+                color: #FFFFFF;
+                padding: 12px;
+                width: 100%;
+                display: block;
+                text-align: center;
+                text-decoration: none;
+                margin-top: 15px;
+                border: 1px solid #FA5050;
+            }
+
+        }
+
+    }
+
+}
+
 #campanhas-pagina{
     #banner{
         background-color: #3DBD8A;

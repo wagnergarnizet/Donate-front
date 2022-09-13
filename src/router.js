@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Instituicoes from './pages/Instituicoes';
 import Campanhas from './pages/Campanhas';
 import Instituicao from './pages/Instituicao';
+import Campanha from './pages/Campanha';
 export default function Rotas(){
     return (
         <Routes>
@@ -11,6 +12,7 @@ export default function Rotas(){
             <Route path="/instituicoes" element={<Instituicoes/>}></Route>
             <Route path="/campanhas" element={<Campanhas/>}></Route>
             <Route path="/instituicao/:instituicao" element={<Instituicao/>}></Route>
+            <Route path="/campanha/:campanha" element={<Campanha/>}></Route>
         </Routes>
     );
 }
