@@ -18,7 +18,7 @@ export default function Home(){
                 <div className='container'>
                     <div className='row'>
                         <div className='col-md-6'>
-                            <h1>Faça você mesmo a diferençaaaaa!</h1>
+                            <h1>Faça você mesmo a diferença!</h1>
                             <p>Conheça nossas campanhas e saiba como ajudar os projetos sociais que estão na nossa plataforma, a sua ajuda será muito bem vinda!</p>
                             <div className='row buttons'>
                                 <div className='col-md-4'>
@@ -91,7 +91,7 @@ export default function Home(){
                         <div className='col-md-8'>
                             <div className='card-destaque'>
                                 <img src={LogoAdra} className="img-fluid" alt='Logo Adra'/>
-                                <Link to="/campanhas/adventista-do-setimo-dia" className='barra-link'>
+                                <Link to="/campanha/adventista-do-setimo-dia" className='barra-link'>
                                     <p>Adventista do Sétimo Dia</p>
                                     <h3>ADRA - Agência Adventista de Desenvolvimento e Recursos assistenciais</h3>
                                     <span className='icon'>
@@ -103,7 +103,7 @@ export default function Home(){
                         <div className='col-md-4'>
                             <div className='card'>
                                 <img src={Vicentinos} className="img-fluid" alt='Vincentinos'/>
-                                <Link to="/campanhas/igreja-catolica-diocese-jundiai" className='barra-link'>
+                                <Link to="/campanha/igreja-catolica-diocese-jundiai" className='barra-link'>
                                     <p>Igreja Católica - Diocese de Jundiaí</p>
                                     <h3>Vicentinos</h3>
                                     <span className='icon'>
@@ -113,7 +113,7 @@ export default function Home(){
                             </div>
                             <div className='card'>
                                 <img src={ResgateCriancas} className="img-fluid" alt='Resgate de crianças'/>
-                                <Link to="/campanhas/anjos-do-resgate" className='barra-link'>
+                                <Link to="/campanha/anjos-do-resgate" className='barra-link'>
                                     <p>Anjos do Resgate</p>
                                     <h3>Resgate de crianças</h3>
                                     <span className='icon'>
@@ -123,7 +123,7 @@ export default function Home(){
                             </div>
                             <div className='card'>
                                 <img src={LerAcolher} className="img-fluid" alt='Ler e acolher'/>
-                                <Link to="/campanhas/pilares" className='barra-link'>
+                                <Link to="/campanha/pilares" className='barra-link'>
                                     <p>Pilares</p>
                                     <h3>Ler e acolher</h3>
                                     <span className='icon'>

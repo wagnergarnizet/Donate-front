@@ -51,7 +51,7 @@ export default function Campanhas(){
                         <div className='col-md-4'>
                             <div className='card-campanhas'>
                                 <div className='img-largura'>
-                                    <Link to="/campanhas/vicentinos" className='barra-link'>
+                                    <Link to="/campanha/vicentinos" className='barra-link'>
                                         <img src={Vicentinos} className="img-fluid" alt='Logo Igr Adventista'/>
                                     </Link>
                                 </div>
@@ -67,7 +67,7 @@ export default function Campanhas(){
                         <div className='col-md-4'>
                             <div className='card-campanhas'>
                                 <div className='img-largura'>
-                                    <Link to="/campanhas/resgate-criancas" className='barra-link'>
+                                    <Link to="/campanha/resgate-criancas" className='barra-link'>
                                         <img src={ResgateCriancas} className="img-fluid" alt='Logo Soc Catolica'/>
                                     </Link>
                                 </div>
@@ -83,7 +83,7 @@ export default function Campanhas(){
                         <div className='col-md-4'>
                             <div className='card-campanhas'>
                                 <div className='img-largura'>
-                                    <Link to="/campanhas/ler-e-acolher" className='barra-link'>
+                                    <Link to="/campanha/ler-e-acolher" className='barra-link'>
                                         <img src={LerAcolher} className="img-fluid" alt='Logo Anj Resgate'/>
                                     </Link>
                                 </div>
@@ -102,7 +102,7 @@ export default function Campanhas(){
                         <div className='col-md-4'>
                             <div className='card-campanhas'>
                                 <div className='img-largura'>
-                                    <Link to="/campanhas/vicentinos" className='barra-link'>
+                                    <Link to="/campanha/vicentinos" className='barra-link'>
                                         <img src={Vicentinos} className="img-fluid" alt='Logo Igr Adventista'/>
                                     </Link>
                                 </div>
@@ -118,7 +118,7 @@ export default function Campanhas(){
                         <div className='col-md-4'>
                             <div className='card-campanhas'>
                                 <div className='img-largura'>
-                                    <Link to="/campanhas/resgate-criancas" className='barra-link'>
+                                    <Link to="/campanha/resgate-criancas" className='barra-link'>
                                         <img src={ResgateCriancas} className="img-fluid" alt='Logo Soc Catolica'/>
                                     </Link>
                                 </div>
@@ -134,7 +134,7 @@ export default function Campanhas(){
                         <div className='col-md-4'>
                             <div className='card-campanhas'>
                                 <div className='img-largura'>
-                                    <Link to="/campanhas/ler-e-acolher" className='barra-link'>
+                                    <Link to="/campanha/ler-e-acolher" className='barra-link'>
                                         <img src={LerAcolher} className="img-fluid" alt='Logo Anj Resgate'/>
                                     </Link>
                                 </div>
@@ -153,7 +153,7 @@ export default function Campanhas(){
                         <div className='col-md-4'>
                             <div className='card-campanhas'>
                                 <div className='img-largura'>
-                                    <Link to="/campanhas/vicentinos" className='barra-link'>
+                                    <Link to="/campanha/vicentinos" className='barra-link'>
                                         <img src={Vicentinos} className="img-fluid" alt='Logo Igr Adventista'/>
                                     </Link>
                                 </div>
@@ -169,7 +169,7 @@ export default function Campanhas(){
                         <div className='col-md-4'>
                             <div className='card-campanhas'>
                                 <div className='img-largura'>
-                                    <Link to="/campanhas/resgate-criancas" className='barra-link'>
+                                    <Link to="/campanha/resgate-criancas" className='barra-link'>
                                         <img src={ResgateCriancas} className="img-fluid" alt='Logo Soc Catolica'/>
                                     </Link>
                                 </div>
@@ -185,7 +185,7 @@ export default function Campanhas(){
                         <div className='col-md-4'>
                             <div className='card-campanhas'>
                                 <div className='img-largura'>
-                                    <Link to="/campanhas/ler-e-acolher" className='barra-link'>
+                                    <Link to="/campanha/ler-e-acolher" className='barra-link'>
                                         <img src={LerAcolher} className="img-fluid" alt='Logo Anj Resgate'/>
                                     </Link>
                                 </div>
