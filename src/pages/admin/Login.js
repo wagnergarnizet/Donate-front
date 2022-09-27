@@ -4,7 +4,7 @@ import imgLogo from './../../images/admin/logo.png';
 
 export default function Login(){
     return (
-        <section id="login">
+        <section id="login" className='Admin'>
             <div className='container'>
                 <div className='row'>
                     <div className='col-md-4 offset-md-4'>

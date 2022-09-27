@@ -1,11 +1,29 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import CampanhaInverno from '../../images/admin/campanhaInverno.jpg';
+import backCampaign from '../../images/admin/backCampaign.png';
 
 export default function Campanhas(){
     return (
         <section className='content' id="campanhas">
             <div className='container'>
+                <div className="row">
+                    <div className="col-md-12 relative">
+                        <div id="productsCampaign">
+                            <div className='banner'>
+                                <img src={backCampaign} alt="Banner " className='img-fluid imgBanner'/>
+                                <h2>Ajuda ao alimento dos alunos</h2>
+                            </div>
+                            <div className='subtitle'>
+                                <p className='data'>Junho/2022 - Agosto/2022</p>
+                                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</h3>
+                            </div>
+                            <div className='products'>
+                                <h2>Produtos</h2>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className='row'>
                     <div className='col-md-12 title-page'>
                         <h1>Gerenciar Campanhas</h1>
@@ -33,20 +51,20 @@ export default function Campanhas(){
                     </div>
                 </div>
             </div>
-            <div id="newCampaign" className='new'>
+            <div id="newMov" className='new'>
                 <h2>Adicionar campanha</h2>
                 <span className='line'></span>
                 <form>
                     <div className='form-group'>
-                        <label forHtml="nome">Nome da campanha</label>
+                        <label htmlFor="nome">Nome da campanha</label>
                         <input type="text" name="nome" id='nome' className='form-control' required/>
                     </div>
                     <div className='form-group'>
-                        <label forHtml="descricao">Descrição</label>
+                        <label htmlFor="descricao">Descrição</label>
                         <textarea nome="descricao" id='descricao' className='form-control' required></textarea>
                     </div>
                     <div className='form-group'>
-                        <label forHtml="periodo">Período</label>
+                        <label htmlFor="periodo">Período</label>
                         <input type="file" name="periodo" id='periodo' className='form-control' required/>
                     </div>
                     <div className='form-group'>
