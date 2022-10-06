@@ -1,5 +1,17 @@
 import * as React from 'react';
 
+function openEditRegister(){
+    document.querySelector(".new").classList.add("active");
+    document.querySelector(".overlay").classList.add("active");
+}
+
+function checkIfBoxesOpen(props){
+    var actives = document.querySelectorAll(".active");
+    for(var i = 0; i < actives.length; i++){
+        actives[i].classList.remove("active");
+    }
+}
+
 export default function Estoque(){
     return (
         <section className='content' id="estoque">
@@ -14,7 +26,7 @@ export default function Estoque(){
                                 <p><span className='status yellow'></span> Estoque baixo</p>
                                 <p><span className='status red'></span> Estoque crítico</p>
                             </div>
-                            <table class="table">
+                            <table className="table">
                                 <thead>
                                     <tr>
                                         <th></th>
@@ -29,7 +41,7 @@ export default function Estoque(){
                                         <td>Arroz</td>
                                         <td>50 kg</td>
                                         <td>
-                                            <button className='btnEdit'>
+                                            <button className='btnEdit' onClick={(openEditRegister)}>
                                                 <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 15.2496V18.9996H3.75L14.81 7.93957L11.06 4.18957L0 15.2496ZM17.71 5.03957C18.1 4.64957 18.1 4.01957 17.71 3.62957L15.37 1.28957C14.98 0.89957 14.35 0.89957 13.96 1.28957L12.13 3.11957L15.88 6.86957L17.71 5.03957Z" fill="#444444"/></svg>
                                             </button>
                                         </td>
@@ -39,7 +51,7 @@ export default function Estoque(){
                                         <td>Feijão</td>
                                         <td>5 kg</td>
                                         <td>
-                                            <button className='btnEdit'>
+                                            <button className='btnEdit' onClick={(openEditRegister)}>
                                                 <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 15.2496V18.9996H3.75L14.81 7.93957L11.06 4.18957L0 15.2496ZM17.71 5.03957C18.1 4.64957 18.1 4.01957 17.71 3.62957L15.37 1.28957C14.98 0.89957 14.35 0.89957 13.96 1.28957L12.13 3.11957L15.88 6.86957L17.71 5.03957Z" fill="#444444"/></svg>
                                             </button>
                                         </td>
@@ -49,7 +61,7 @@ export default function Estoque(){
                                         <td>Farinha</td>
                                         <td>27 kg</td>
                                         <td>
-                                            <button className='btnEdit'>
+                                            <button className='btnEdit' onClick={(openEditRegister)}>
                                                 <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 15.2496V18.9996H3.75L14.81 7.93957L11.06 4.18957L0 15.2496ZM17.71 5.03957C18.1 4.64957 18.1 4.01957 17.71 3.62957L15.37 1.28957C14.98 0.89957 14.35 0.89957 13.96 1.28957L12.13 3.11957L15.88 6.86957L17.71 5.03957Z" fill="#444444"/></svg>
                                             </button>
                                         </td>
@@ -81,9 +93,10 @@ export default function Estoque(){
                         <textarea name="obs" id='obs' className='form-control' required></textarea>
                     </div>
                     <button type="submit" className='btn-submit'>Salvar</button>
-                    <button type="button" className='btn-cancel'>Cancelar</button>
+                    <button type="button" className='btn-cancel' onClick={(checkIfBoxesOpen)}>Cancelar</button>
                 </form>
             </div>
+            <div className='overlay' onClick={(checkIfBoxesOpen)}></div>
         </section>
     );
 }

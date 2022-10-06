@@ -12,14 +12,14 @@ const secondStep = () => {
                             <input type="text" className="form-control" name="institucao" id="institucao" aria-describedby="institucaoHelpId" placeholder=""/>
                             <small id="institucaoHelpId" className="form-text text-muted">Instituição Incorreta!</small>
                         </div>
-                        <div class="form-group">
-                            <label for="descricao">Descrição</label>
-                            <textarea class="form-control" name="descricao" id="descricao" rows="4"></textarea>
+                        <div className="form-group">
+                            <label htmlFor="descricao">Descrição</label>
+                            <textarea className="form-control" name="descricao" id="descricao" rows="4"></textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="telefone">Telefone</label>
-                            <input type="tel" name="telefone" id="telefone" class="form-control" aria-describedby="telefonehelpId"/>
-                            <small id="telefonehelpId" class="text-muted">Telefone Incorreto</small>
+                        <div className="form-group">
+                            <label htmlFor="telefone">Telefone</label>
+                            <input type="tel" name="telefone" id="telefone" className="form-control" aria-describedby="telefonehelpId"/>
+                            <small id="telefonehelpId" className="text-muted">Telefone Incorreto</small>
                         </div>
                     </div>
                     <div className='col-md-6'>
@@ -45,10 +45,10 @@ const secondStep = () => {
                         </div>
                     </div>
                     <div className='col-md-12'>
-                        <div class="form-group">
-                            <label for="logo">Upload do Logotipo</label>
-                            <input type="file" class="form-control" name="logo" id="logo" aria-describedby="logohelpId" placeholder="Logotipo"/>
-                            <small id="logohelpId" class="form-text text-muted">Logo inválido</small>
+                        <div className="form-group">
+                            <label htmlFor="logo">Upload do Logotipo</label>
+                            <input type="file" className="form-control" name="logo" id="logo" aria-describedby="logohelpId" placeholder="Logotipo"/>
+                            <small id="logohelpId" className="form-text text-muted">Logo inválido</small>
                         </div>
                     </div>
                 </div>

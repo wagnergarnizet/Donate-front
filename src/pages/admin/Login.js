@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import imgLogo from './../../images/admin/logo.png';
+// import { Formik } from "formik";
+// import * as EmailValidator from "email-validator"; // used when validating with a self-implemented approach
+// import * as Yup from "yup"; // used when validating with a pre-built solution
 
 export default function Login(){
     return (
@@ -11,18 +14,18 @@ export default function Login(){
                         <div className='bg-card'>
                             <img src={imgLogo} alt="Logo" className='img-fluid'/>
                             <form action='' method='POST'>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label for="email">E-mail</label>
-                                    <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelpId" placeholder=""/>
-                                    <small id="emailHelpId" class="form-text text-muted">E-mail Incorreto!</small>
+                                    <input type="email" className="form-control" name="email" id="email" aria-describedby="emailHelpId" placeholder=""/>
+                                    <small id="emailHelpId" className="form-text text-muted">E-mail Incorreto!</small>
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label for="senha">Senha</label>
-                                    <input type="text" name="senha" id="senha" class="form-control" placeholder="" aria-describedby="senhaHelpId"/>
-                                    <small id="senhaHelpId" class="text-muted">Senha Incorreta!</small>
+                                    <input type="text" name="senha" id="senha" className="form-control" placeholder="" aria-describedby="senhaHelpId"/>
+                                    <small id="senhaHelpId" className="text-muted">Senha Incorreta!</small>
                                 </div>
                                 <Link to='/admin/forget-password' className='link-forget'>Esqueceu a senha?</Link>
-                                <button type="submit" class="btn btn-success">Entrar</button>
+                                <button type="submit" className="btn btn-success">Entrar</button>
                                 <Link to='/admin/first-access' className='link-first-access'>Primeiro acesso?</Link>
                             </form>
                         </div>

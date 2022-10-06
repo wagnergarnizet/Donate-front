@@ -135,7 +135,7 @@ export default function Campanha(){
                                             <b> Óleo </b>
                                         </p>
                                         <div className="progress">
-                                            <div class="progress-bar bg-warning" role="progressbar" aria-label="oleo-progress-bar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div className="progress-bar bg-warning" role="progressbar" aria-label="oleo-progress-bar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                         <p>
                                             60 /&nbsp;<b>100</b>&nbsp;unidades
@@ -151,7 +151,7 @@ export default function Campanha(){
                                             <b> Arroz branco </b>
                                         </p>
                                         <div className="progress">
-                                            <div class="progress-bar bg-danger" role="progressbar" aria-label="arroz-progress-bar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div className="progress-bar bg-danger" role="progressbar" aria-label="arroz-progress-bar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                         <p>
                                             20 /&nbsp;<b>100</b>&nbsp;kg
@@ -171,7 +171,7 @@ export default function Campanha(){
                                             <b> Farinha </b>
                                         </p>
                                         <div className="progress">
-                                            <div class="progress-bar bg-danger" role="progressbar" aria-label="farinha-progress-bar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div className="progress-bar bg-danger" role="progressbar" aria-label="farinha-progress-bar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                         <p>
                                             20 /&nbsp;<b>100</b>&nbsp;kg
@@ -187,7 +187,7 @@ export default function Campanha(){
                                             <b> Feijão </b>
                                         </p>
                                         <div className="progress">
-                                            <div class="progress-bar bg-success" role="progressbar" aria-label="feijao-progress-bar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div className="progress-bar bg-success" role="progressbar" aria-label="feijao-progress-bar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                         <p>
                                             95 /&nbsp;<b>100</b>&nbsp;kg
@@ -207,7 +207,7 @@ export default function Campanha(){
                                             <b> Água Minetal </b>
                                         </p>
                                         <div className="progress">
-                                            <div class="progress-bar bg-success" role="progressbar" aria-label="agua-progress-bar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div className="progress-bar bg-success" role="progressbar" aria-label="agua-progress-bar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                         <p>
                                             95 /&nbsp;<b>100</b>&nbsp;litros
@@ -223,7 +223,7 @@ export default function Campanha(){
                                             <b> Milho </b>
                                         </p>
                                         <div className="progress">
-                                            <div class="progress-bar bg-warning" role="progressbar" aria-label="milho-progress-bar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div className="progress-bar bg-warning" role="progressbar" aria-label="milho-progress-bar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                         <p>
                                             60 /&nbsp;<b>100</b>&nbsp;unidades

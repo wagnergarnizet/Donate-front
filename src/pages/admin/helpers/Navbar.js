@@ -1,7 +1,22 @@
 import * as React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import logo from './../../../images/admin/logo-without-letters.png';
 import avatar from './../../../images/admin/avatar.png';
+
+function closeMenu(){
+    var menu = document.querySelector("header ul.navbarLinks");
+    menu.style.left = "-100%";
+}
+
+function activeMenu(){
+    var menu = document.querySelector("header ul.navbarLinks");
+    console.log(menu.style.left);
+    if(menu.style.left === "0px"){
+        menu.style.left = "-100%";
+    }else{
+        menu.style.left = "0";
+    }
+}
 
 export default function Navbar(){
     return (
@@ -10,9 +25,31 @@ export default function Navbar(){
                 <div className="row">
                     <div className="col-2">
                         <img src={logo} alt="Logo" className='img-fluid'/>
-                        <button className='btn-burger-menu'>
+                        <button onClick={(activeMenu)} className='btn-burger-menu'>
                             <svg width="28" height="18" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.5 18V15.75H27.5V18H0.5ZM0.5 10.125V7.875H27.5V10.125H0.5ZM0.5 2.25V0H27.5V2.25H0.5Z" fill="#444444"/></svg>
                         </button>
+                        <ul className='navbarLinks'>
+                            <li>
+                                <Link to='/admin/campanhas' onClick={(closeMenu)}>
+                                    Campanhas
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to='/admin/estoque' onClick={(closeMenu)}>
+                                    Estoque
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to='/admin/produtos' onClick={(closeMenu)}>
+                                    Produtos
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to='/admin/usuarios' onClick={(closeMenu)}>
+                                    Usuários
+                                </Link>
+                            </li>
+                        </ul>
                     </div>
                     <div className='col-1'></div>
                     <div className='col-4'>

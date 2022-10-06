@@ -12,10 +12,10 @@ function App() {
     <div className="Admin">
         <Navbar></Navbar>
         <Routes>
-            <Route path="/campanhas" element={ <Campanhas/> }></Route>
-            <Route path="/usuarios" element={ <Usuarios/> }></Route>
-            <Route path="/produtos" element={ <Produtos/> }></Route>
-            <Route path="/estoque" element={ <Estoque/> }></Route>
+          <Route path="/campanhas" element={ <Campanhas/> }></Route>
+          <Route path="/usuarios" element={ <Usuarios/> }></Route>
+          <Route path="/produtos" element={ <Produtos/> }></Route>
+          <Route path="/estoque" element={ <Estoque/> }></Route>
         </Routes>
     </div>
   );
