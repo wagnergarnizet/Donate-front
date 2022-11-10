@@ -124,12 +124,14 @@
                 justify-content: center;
                 align-items: center;
                 margin-bottom: 40px;
-                a.group{
+                button.group{
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     text-decoration: none;
                     color: rgba(68, 68, 68, 0.6);
+                    border: none;
+                    background-color: transparent;
                     p{
                         margin: auto;
                     }
@@ -188,6 +190,9 @@
                     border-radius: 6px;
                     &:focus, &.valid{
                         border: 2px solid #3DBD8A;
+                    }
+                    &.errorValidate{
+                        border: 2px solid #FA5050;
                     }
                 }
                 small{

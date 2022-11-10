@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import imgLogo from './../../images/admin/logo.png';
 import FirstStep from './firstSteps/first';
 import SecondStep from './firstSteps/second';
@@ -37,20 +37,20 @@ export default function FirstAccess(){
                             <img src={imgLogo} alt="Logo" className='img-fluid'/>
                             <p>Preencha os dados abaixo para fazer o seu cadastro</p>
                             <div className='flex-center'>
-                                <a className={activeTab === "first" ? "active group" : "group"} onClick={handleStep1}>
+                                <button className={activeTab === "first" ? "active group" : "group"} id="btnFirstStep">
                                     <span className='number'>1</span>
                                     <span>Dados do usuário</span>
-                                </a>
+                                </button>
                                 <span className='trace'></span>
-                                <a className={activeTab === "second" ? "active group" : "group"} onClick={handleStep2}>
+                                <button className={activeTab === "second" ? "active group" : "group"} onClick={handleStep2} id="btnSecondStep">
                                     <span className='number'>2</span>
                                     <span>Dados da Instituição</span>
-                                </a>
+                                </button>
                                 <span className='trace'></span>
-                                <a className={activeTab === "third" ? "active group" : "group"} onClick={handleStep3}>
+                                <button className={activeTab === "third" ? "active group" : "group"} onClick={handleStep3} id="btnThirdStep">
                                     <span className='number'>3</span>
                                     <span>Envio</span>
-                                </a>
+                                </button>
                             </div>
                             <ActiveStep step={activeTab} />
                         </div>
