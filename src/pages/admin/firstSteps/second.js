@@ -4,13 +4,56 @@ import { Link } from 'react-router-dom';
 export default function FirstStep(){
     const [institucao, setInstituicao] = useState('');
     const [descricao, setDescricao] = useState('');
-    const [endereco, setEndereco] = useState('');
     const [telefone, setTelefone] = useState('');
     const [whatsapp, setWhatsapp] = useState('');
     const [logotipo, setLogotipo] = useState('');
-    const [email, setEmail] = useState('');
     const [cnpj, setCnpj] = useState('');
+    const [email, setEmail] = useState('');
+    const [endereco, setEndereco] = useState('');
+    const [cidade, setCidade] = useState('');
+    const [bairro, setBairro] = useState('');
+    const [estado, setEstado] = useState('');
+    const [numero, setNumero] = useState('');
     const [cep, setCep] = useState('');
+
+    function onCepSearch(cepSearch){
+        var cepFormat = cepSearch.replace(/\D/g, "");
+        const cepFormatFinal = cepFormat.replace(/(\d{5})(\d{1,3})$/, "$1-$2");
+
+        if (cepFormatFinal.length === 9) {
+            var url = 'https://viacep.com.br/ws/' + cepFormatFinal + '/json/';
+
+            fetch(url, {method: "GET"})
+                .then(response => response.json())
+                .then(data => {
+                    setEndereco(data.logradouro);
+                    setBairro(data.bairro);
+                    setCidade(data.localidade);
+                    setEstado(data.uf);
+                })
+                .catch(error => {
+                    alert("CEP não encontrado.");
+                });
+        }
+
+        setCep(cepFormatFinal);
+    }
+
+    function setTelefoneMask(phone){
+        var v = phone;
+        v = v.replace(/\D/g, '');
+        v = v.replace(/^(\d{2})(\d)/g, '($1) $2');
+        v = v.replace(/(\d)(\d{4})$/, '$1-$2');
+        setTelefone(v);
+    }
+
+    function setWhatsappMask(phone){
+        var v = phone;
+        v = v.replace(/\D/g, '');
+        v = v.replace(/^(\d{2})(\d)/g, '($1) $2');
+        v = v.replace(/(\d)(\d{4})$/, '$1-$2');
+        setWhatsapp(v);
+    }
 
     function onSubmitSecondStep(e){
         e.preventDefault();
@@ -22,11 +65,11 @@ export default function FirstStep(){
                 "nome": institucao,
                 "email": email,
                 "cnpj": cnpj,
-                "endereco": endereco,
+                "endereco": endereco + ", " + numero,
                 "cep": cep,
-                "cidade": "string",
-                "estado": "string",
-                "bairro": "string",
+                "cidade": cidade,
+                "estado": estado,
+                "bairro": bairro,
                 "logotipo": logotipo,
                 "ativo": true,
                 "descricao": descricao,
@@ -39,34 +82,6 @@ export default function FirstStep(){
             .then(response => response.json())
             .then(data => {
                 localStorage.setItem('instituicao', data.id);
-
-                const requestOptions = {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        "nome": institucao,
-                        "email": email,
-                        "cnpj": cnpj,
-                        "endereco": endereco,
-                        "cep": cep,
-                        "cidade": "string",
-                        "estado": "string",
-                        "bairro": "string",
-                        "logotipo": logotipo,
-                        "ativo": true,
-                        "descricao": descricao,
-                        "telefone": telefone,
-                        "celular": whatsapp,
-                        "usuarioId": localStorage.getItem('user')
-                    })
-                };
-                fetch('/Usuario/' + localStorage.getItem('user'), requestOptions)
-                    .then(response => response.json())
-                    .then(data => {
-                        localStorage.setItem('instituicao', data.id);
-                        
-                        document.querySelector('#btnThirdStep').click();
-                    });
                 document.querySelector('#btnThirdStep').click();
             });
     }
@@ -92,8 +107,13 @@ export default function FirstStep(){
                         </div>
                         <div className="form-group">
                             <label htmlFor="telefone">Telefone</label>
-                            <input type="tel" name="telefone" id="telefone" className="form-control" aria-describedby="telefonehelpId" onChange={(e) => setTelefone(e.target.value)} required/>
+                            <input type="tel" name="telefone" id="telefone" className="form-control" aria-describedby="telefonehelpId" minLength="14" maxLength="15" value={telefone} onChange={(e) => setTelefoneMask(e.target.value)} pattern="(\([1-9]{2}\)\s9[0-9]{4}-[0-9]{4})|((\([1-9]{2}\)) (?!9)[0-9]{4}-[0-9]{4})" required/>
                             <small id="telefonehelpId" className="text-muted">Telefone Incorreto</small>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="whatsapp">Whatsapp</label>
+                            <input type="tel" name="whatsapp" id="whatsapp" className="form-control" placeholder="" aria-describedby="whatsappHelpId" minLength="14" maxLength="15" value={whatsapp} onChange={(e) => setWhatsappMask(e.target.value)} pattern="(\([1-9]{2}\)\s9[0-9]{4}-[0-9]{4})|((\([1-9]{2}\)) (?!9)[0-9]{4}-[0-9]{4})" required/>
+                            <small id="whatsappHelpId" className="text-muted">Whatsapp Incorreto!</small>
                         </div>
                     </div>
                     <div className='col-md-6'>
@@ -104,18 +124,37 @@ export default function FirstStep(){
                         </div>
                         <div className="form-group">
                             <label htmlFor="cep">CEP</label>
-                            <input type="text" name="cep" id="cep" className="form-control" placeholder="" aria-describedby="cepHelpId" onChange={(e) => setCep(e.target.value)} required/>
+                            <input type="text" name="cep" id="cep" className="form-control" placeholder="" aria-describedby="cepHelpId" onChange={(e) => onCepSearch(e.target.value)} value={cep} pattern="^([0-9]{5}-[0-9]{3})*$" minLength="9" maxLength="9" required/>
                             <small id="cepHelpId" className="text-muted">CEP Incorreto!</small>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="endereco">Endereço</label>
-                            <input type="text" name="endereco" id="endereco" className="form-control" placeholder="" aria-describedby="enderecoHelpId" onChange={(e) => setEndereco(e.target.value)} required/>
-                            <small id="enderecoHelpId" className="text-muted">Endereço Incorreto!</small>
+                            <div className="row">
+                                <div className="col-md-8">
+                                    <label htmlFor="endereco">Endereço</label>
+                                    <input type="text" name="endereco" id="endereco" className="form-control" placeholder="" aria-describedby="enderecoHelpId" onChange={(e) => setEndereco(e.target.value)} value={endereco} required/>
+                                    <small id="enderecoHelpId" className="text-muted">Endereço Incorreto!</small>
+                                </div>
+                                <div className="col-md-4">
+                                    <label htmlFor="numero">Número</label>
+                                    <input type="text" name="numero" id="numero" className="form-control" placeholder="" aria-describedby="numeroHelpId" onChange={(e) => setNumero(e.target.value)} required/>
+                                    <small id="numeroHelpId" className="text-muted">Número Incorreto!</small>
+                                </div>
+                            </div>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="whatsapp">Whatsapp</label>
-                            <input type="tel" name="whatsapp" id="whatsapp" className="form-control" placeholder="" aria-describedby="whatsappHelpId" onChange={(e) => setWhatsapp(e.target.value)} required/>
-                            <small id="whatsappHelpId" className="text-muted">Whatsapp Incorreto!</small>
+                            <label htmlFor="bairro">Bairro</label>
+                            <input type="text" name="bairro" id="bairro" className="form-control" placeholder="" aria-describedby="bairroHelpId" onChange={(e) => setBairro(e.target.value)} value={bairro} required/>
+                            <small id="bairroHelpId" className="text-muted">Bairro Incorreto!</small>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="cidade">Cidade</label>
+                            <input type="text" name="cidade" id="cidade" className="form-control" placeholder="" aria-describedby="cidadeHelpId" onChange={(e) => setCidade(e.target.value)} value={cidade} required/>
+                            <small id="cidadeHelpId" className="text-muted">Cidade Incorreto!</small>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="estado">Estado</label>
+                            <input type="text" name="estado" id="estado" className="form-control" placeholder="" aria-describedby="estadoHelpId" onChange={(e) => setEstado(e.target.value)} value={estado} required/>
+                            <small id="estadoHelpId" className="text-muted">Estado Incorreto!</small>
                         </div>
                     </div>
                     <div className='col-md-12'>
