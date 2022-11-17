@@ -1,26 +1,39 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from './../../../images/admin/logo-without-letters.png';
 import avatar from './../../../images/admin/avatar.png';
-
-function closeMenu(){
-    var menu = document.querySelector("header ul.navbarLinks");
-    menu.style.left = "-100%";
-}
-
-function activeMenu(){
-    var menu = document.querySelector("header ul.navbarLinks");
-    console.log(menu.style.left);
-    if(menu.style.left === "0px"){
-        menu.style.left = "-100%";
-    }else{
-        menu.style.left = "0";
-    }
-}
+import exit from './../../../images/admin/exit.png';
 
 export default function Navbar(){
+    const navigate = useNavigate();
+
+    function exitAdmin(){
+        localStorage.removeItem('token');
+        navigate('/admin/login');
+    }
+
+    function closeMenu(){
+        var menu = document.querySelector("header ul.navbarLinks");
+        menu.style.left = "-100%";
+    }
+
+    function activeMenu(){
+        var menu = document.querySelector("header ul.navbarLinks");
+        console.log(menu.style.left);
+        if(menu.style.left === "0px"){
+            menu.style.left = "-100%";
+        }else{
+            menu.style.left = "0";
+        }
+    }
+
+    function onInit(){
+        var uEmail = localStorage.getItem("user");
+        var t = localStorage.getItem("token");
+    }
+
     return (
-        <header>
+        <header onLoadStart={onInit}>
             <div className="container">
                 <div className="row">
                     <div className="col-2">
@@ -67,6 +80,9 @@ export default function Navbar(){
                         <Link to='/admin/first-access' id='btn-new-user' className='btn-icon'>
                             <svg width="17" height="19" viewBox="0 0 17 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.66683 11.8768V13.6185C7.9126 13.3518 7.10539 13.27 6.313 13.38C5.52061 13.4899 4.76616 13.7884 4.11302 14.2503C3.45988 14.7123 2.92712 15.3242 2.55946 16.0347C2.19181 16.7452 2.00001 17.5335 2.00016 18.3335L0.333496 18.3327C0.333238 17.3151 0.56593 16.3109 1.01375 15.3972C1.46156 14.4834 2.11261 13.6843 2.91701 13.061C3.72141 12.4378 4.65781 12.0069 5.65446 11.8015C6.6511 11.5961 7.68155 11.6216 8.66683 11.876V11.8768ZM7.00016 10.8335C4.23766 10.8335 2.00016 8.596 2.00016 5.8335C2.00016 3.071 4.23766 0.833496 7.00016 0.833496C9.76266 0.833496 12.0002 3.071 12.0002 5.8335C12.0002 8.596 9.76266 10.8335 7.00016 10.8335ZM7.00016 9.16683C8.84183 9.16683 10.3335 7.67516 10.3335 5.8335C10.3335 3.99183 8.84183 2.50016 7.00016 2.50016C5.1585 2.50016 3.66683 3.99183 3.66683 5.8335C3.66683 7.67516 5.1585 9.16683 7.00016 9.16683ZM12.0002 14.1668V11.6668H13.6668V14.1668H16.1668V15.8335H13.6668V18.3335H12.0002V15.8335H9.50016V14.1668H12.0002Z" fill="#444444"/></svg>
                         </Link>
+                        <button id='btn-exit' className='btn-icon' onClick={exitAdmin}>
+                            <img src={exit} alt="Exit"/>
+                        </button>
                         <span id='menu-bar'></span>
                         <div className='info-user'>
                             <p className='name-user'>Carlos Eduardo</p>

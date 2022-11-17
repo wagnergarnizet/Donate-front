@@ -664,6 +664,9 @@
         background-color: #fff;
         min-height: calc(100vh - 106px);
         transition: ease-in-out all 0.5s;
+        &:not(.active){
+            top: -120%;
+        }
         &.active{
             top: 106px;
         }
