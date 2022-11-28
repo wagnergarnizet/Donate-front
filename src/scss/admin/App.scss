@@ -377,22 +377,22 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 50px;
-            button.btn-new{
-                background: #277A59;
-                border-radius: 24px;
-                padding: 12px 23px;
-                color: #F4F5F7;
-                align-items: center;
-                letter-spacing: 0.3px;
-                text-transform: uppercase;
-                font-style: normal;
-                font-weight: 500;
-                font-size: 14px;
-                line-height: 16px;
-                border: none;
-                svg{
-                    margin-right: 7px;
-                }
+        }
+        button.btn-new{
+            background: #277A59;
+            border-radius: 24px;
+            padding: 12px 23px;
+            color: #F4F5F7;
+            align-items: center;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 16px;
+            border: none;
+            svg{
+                margin-right: 7px;
             }
         }
         .card{
@@ -459,6 +459,7 @@
             background-color: #fff;
             padding: 40px;
             transition: ease-in-out all 0.5s;
+            overflow-y: auto;
             &.active{
                 right: 0;
             }

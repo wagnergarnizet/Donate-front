@@ -18,23 +18,29 @@ export default function Login(){
                 "senha": senha
             })
         };
-        fetch('/Login', requestOptions)
-            .then(response => response.json())
-            .then(data => {
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('user', data.user.email);
-                navigate('/admin/campanhas');
+        fetch('/login', requestOptions)
+            .then(response => {
+                if(response.ok){
+                    response.json().then(data => {
+                        localStorage.setItem('token', data.token);
+                        localStorage.setItem('user', data.user.id);
+                        navigate('/admin/campanhas');
+                    })
+                }else{
+                    alert("Usuário Incorreto");
+                }
+            })
+            .catch(er => {
+                alert("Usuário Incorreto");
             });
     }
 
     function OnInit(){
         var user = localStorage.getItem('user');
-        useEffect(() => {
-            if(user != "" || user != null || user != undefined){
-                // alert("Você já está logado!");
-                navigate('/admin/campanhas');
-            }
-        },[]);
+        if(user != "" && user != null && user != undefined){
+            // alert("Você já está logado!");
+            navigate('/admin/campanhas');
+        }
     }
 
     return (

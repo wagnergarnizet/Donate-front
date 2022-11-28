@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from './../../../images/admin/logo-without-letters.png';
 import avatar from './../../../images/admin/avatar.png';
@@ -7,8 +7,13 @@ import exit from './../../../images/admin/exit.png';
 export default function Navbar(){
     const navigate = useNavigate();
 
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+
     function exitAdmin(){
         localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('instituicao');
         navigate('/admin/login');
     }
 
@@ -19,7 +24,6 @@ export default function Navbar(){
 
     function activeMenu(){
         var menu = document.querySelector("header ul.navbarLinks");
-        console.log(menu.style.left);
         if(menu.style.left === "0px"){
             menu.style.left = "-100%";
         }else{
@@ -28,12 +32,27 @@ export default function Navbar(){
     }
 
     function onInit(){
-        var uEmail = localStorage.getItem("user");
+        var u = localStorage.getItem("user");
         var t = localStorage.getItem("token");
+
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + t
+            }
+        };
+
+        fetch('/Usuario/' + u, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                setName(data.nome);
+                setEmail(data.email);
+            });
     }
 
     return (
-        <header onLoadStart={onInit}>
+        <header onLoad={onInit}>
             <div className="container">
                 <div className="row">
                     <div className="col-2">
@@ -85,10 +104,10 @@ export default function Navbar(){
                         </button>
                         <span id='menu-bar'></span>
                         <div className='info-user'>
-                            <p className='name-user'>Carlos Eduardo</p>
-                            <p className='email-user'>carlos@freitas.eti.br</p>
+                            <p className='name-user'>{ name }</p>
+                            <p className='email-user'>{ email }</p>
                         </div>
-                        <img src={avatar} alt="user avatar"/>
+                        {/* <img src={avatar} alt="user avatar"/> */}
                     </div>
                 </div>
             </div>

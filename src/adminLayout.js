@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import './scss/admin/App.scss';
 import Navbar from './pages/admin/helpers/Navbar';
 import Campanhas from './pages/admin/Campanhas';
@@ -12,6 +12,7 @@ function App() {
     <div className="Admin">
         <Navbar></Navbar>
         <Routes>
+          <Route path='/' exact element={<Navigate replace to="/admin/campanhas" />}></Route>
           <Route path="/campanhas" element={ <Campanhas/> }></Route>
           <Route path="/usuarios" element={ <Usuarios/> }></Route>
           <Route path="/produtos" element={ <Produtos/> }></Route>
