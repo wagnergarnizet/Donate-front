@@ -18,7 +18,8 @@ function blurInput(e){
 
 export default function Instituicoes(){
 
-    const [instituicoes, setInstituicoes] = useState([]);
+    const [instituicoes, setInstituicoes] = useState([]);    
+    const [viewInstituicoes, setViewInstituicoes] = useState([]);
 
     useEffect(() => {
         const requestOptions = {
@@ -29,8 +30,22 @@ export default function Instituicoes(){
             .then(response => response.json())
             .then(data => {
                 setInstituicoes(data);
+                setViewInstituicoes(data);
             });
     }, []);
+
+    function instituicaoFiltro (){
+        var filter = document.getElementById("pesquisar");
+        const valueFilter = filter.value;
+
+
+        const dados = instituicoes.filter((instituicao) => {
+            const nomeInstituicao = instituicao.nome.toLowerCase();
+            if (nomeInstituicao.indexOf(valueFilter.toLowerCase()) > -1)
+                return instituicao;
+        });
+        setViewInstituicoes(dados);
+    }
 
     return (
         <section id="instituicao-pagina">
@@ -56,7 +71,7 @@ export default function Instituicoes(){
                                     <small id="errorPesquisar" className="text-muted">Pesquisa inválida</small>
                                 </div>
                                 <div className='col-md-2'>
-                                    <button className='btn-pesquisar' type='submit'>Pesquisar</button>
+                                    <button className='btn-pesquisar' type='button' onClick={instituicaoFiltro}>Pesquisar</button>
                                 </div>
                             </div>
                         </form>
@@ -64,7 +79,7 @@ export default function Instituicoes(){
                    
 
                     <div className='row' >
-                        { instituicoes.map((instituicao) => {
+                        { viewInstituicoes.map((instituicao) => {
                             return (<div className='col-md-4' key={instituicao.id}>
                                 <div className='card-instituicoes'>
                                     <div className='img-largura'>

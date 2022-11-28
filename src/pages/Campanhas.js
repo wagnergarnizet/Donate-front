@@ -17,8 +17,9 @@ function blurInput(e){
 
 export default function Campanhas(){
     const [campanhas, setCampanhas] = useState([]);
+    const [viewCampanhas, setViewCampanhas] = useState([]);
 
-    useEffect(() => {
+    useEffect(() => {        
         const requestOptions = {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
@@ -27,10 +28,23 @@ export default function Campanhas(){
             .then(response => response.json())
             .then(data => {
                 setCampanhas(data);
+                setViewCampanhas(data);
             });
     }, []);
 
-    console.log("Test",campanhas);
+    function campanhaFiltro (){
+        var filter = document.getElementById("pesquisar");
+        const valueFilter = filter.value;
+
+
+        const dados = campanhas.filter((campanha) => {
+            const nomeCampanha = campanha.nome.toLowerCase();
+            if (nomeCampanha.indexOf(valueFilter.toLowerCase()) > -1)
+                return campanha;
+        });
+        setViewCampanhas(dados);
+    }
+    
 
     return (
         <section id="campanhas-pagina">
@@ -55,14 +69,14 @@ export default function Campanhas(){
                                     <small id="errorPesquisar" className="text-muted">Pesquisa inválida</small>
                                 </div>
                                 <div className='col-md-2'>
-                                    <button className='btn-pesquisar' type='submit'>Pesquisar</button>
+                                    <button className='btn-pesquisar' type='button' onClick={campanhaFiltro}>Pesquisar</button>
                                 </div>
                             </div>
                         </form>
                     </div>
 
                     <div className='row'>
-                        { campanhas.map((campanha) => {
+                        { viewCampanhas.map((campanha) => {
                             return (<div className='col-md-4' key={campanha.id}>
                                 <div className='card-campanhas'>
                                     <div className='img-largura'>
