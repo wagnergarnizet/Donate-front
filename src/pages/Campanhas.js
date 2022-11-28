@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import Vicentinos from './../images/vicentinos.jpg';
-import ResgateCriancas from './../images/resgate-criancas.jpg';
-import LerAcolher from './../images/ler-acolher.jpg';
+import { useState, useEffect } from 'react';
 
 function focusInput(e){
     var label = document.querySelector('label[for=' + e.target.id + ']');
@@ -18,6 +16,36 @@ function blurInput(e){
 }
 
 export default function Campanhas(){
+    const [campanhas, setCampanhas] = useState([]);
+    const [viewCampanhas, setViewCampanhas] = useState([]);
+
+    useEffect(() => {        
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        };
+        fetch('/Campanha', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                setCampanhas(data);
+                setViewCampanhas(data);
+            });
+    }, []);
+
+    function campanhaFiltro (){
+        var filter = document.getElementById("pesquisar");
+        const valueFilter = filter.value;
+
+
+        const dados = campanhas.filter((campanha) => {
+            const nomeCampanha = campanha.nome.toLowerCase();
+            if (nomeCampanha.indexOf(valueFilter.toLowerCase()) > -1)
+                return campanha;
+        });
+        setViewCampanhas(dados);
+    }
+    
+
     return (
         <section id="campanhas-pagina">
             <section id="banner">
@@ -41,163 +69,31 @@ export default function Campanhas(){
                                     <small id="errorPesquisar" className="text-muted">Pesquisa inválida</small>
                                 </div>
                                 <div className='col-md-2'>
-                                    <button className='btn-pesquisar' type='submit'>Pesquisar</button>
+                                    <button className='btn-pesquisar' type='button' onClick={campanhaFiltro}>Pesquisar</button>
                                 </div>
                             </div>
                         </form>
                     </div>
 
                     <div className='row'>
-                        <div className='col-md-4'>
-                            <div className='card-campanhas'>
-                                <div className='img-largura'>
-                                    <Link to="/campanha/vicentinos" className='barra-link'>
-                                        <img src={Vicentinos} className="img-fluid" alt='Logo Igr Adventista'/>
-                                    </Link>
+                        { viewCampanhas.map((campanha) => {
+                            return (<div className='col-md-4' key={campanha.id}>
+                                <div className='card-campanhas'>
+                                    <div className='img-largura'>
+                                        <Link to="/campanha/vicentinos" className='barra-link'>
+                                            <img src={campanha.logotipo} className="img-fluid" alt='Logo Igr Adventista'/>
+                                        </Link>
+                                    </div>
+                                    <div className='card-desc-campanhas'>
+                                        <p>Jundiaí, São Paulo</p>
+                                        <h5>{campanha.nome}</h5>
+                                        <p>
+                                            <Link to="/instituicoes">Igreja Católica - Diocese de Jundiaí</Link>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div className='card-desc-campanhas'>
-                                    <p>Jundiaí, São Paulo</p>
-                                    <h5>Vicentinos</h5>
-                                    <p>
-                                        <Link to="/instituicoes">Igreja Católica - Diocese de Jundiaí</Link>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='col-md-4'>
-                            <div className='card-campanhas'>
-                                <div className='img-largura'>
-                                    <Link to="/campanha/resgate-criancas" className='barra-link'>
-                                        <img src={ResgateCriancas} className="img-fluid" alt='Logo Soc Catolica'/>
-                                    </Link>
-                                </div>
-                                <div className='card-desc-campanhas'>
-                                    <p>Itu, São Paulo</p>
-                                    <h5>Resgate de crianças</h5>
-                                    <p>
-                                        <Link to="/instituicoes">Anjos do Resgate</Link>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='col-md-4'>
-                            <div className='card-campanhas'>
-                                <div className='img-largura'>
-                                    <Link to="/campanha/ler-e-acolher" className='barra-link'>
-                                        <img src={LerAcolher} className="img-fluid" alt='Logo Anj Resgate'/>
-                                    </Link>
-                                </div>
-                                <div className='card-desc-campanhas'>
-                                    <p>São Paulo</p>
-                                    <h5>Ler e acolher</h5>
-                                    <p>
-                                        <Link to="/instituicoes">Pilares</Link>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className='row'>
-                        <div className='col-md-4'>
-                            <div className='card-campanhas'>
-                                <div className='img-largura'>
-                                    <Link to="/campanha/vicentinos" className='barra-link'>
-                                        <img src={Vicentinos} className="img-fluid" alt='Logo Igr Adventista'/>
-                                    </Link>
-                                </div>
-                                <div className='card-desc-campanhas'>
-                                    <p>Jundiaí, São Paulo</p>
-                                    <h5>Vicentinos</h5>
-                                    <p>
-                                        <Link to="/instituicoes">Igreja Católica - Diocese de Jundiaí</Link>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='col-md-4'>
-                            <div className='card-campanhas'>
-                                <div className='img-largura'>
-                                    <Link to="/campanha/resgate-criancas" className='barra-link'>
-                                        <img src={ResgateCriancas} className="img-fluid" alt='Logo Soc Catolica'/>
-                                    </Link>
-                                </div>
-                                <div className='card-desc-campanhas'>
-                                    <p>Itu, São Paulo</p>
-                                    <h5>Resgate de crianças</h5>
-                                    <p>
-                                        <Link to="/instituicoes">Anjos do Resgate</Link>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='col-md-4'>
-                            <div className='card-campanhas'>
-                                <div className='img-largura'>
-                                    <Link to="/campanha/ler-e-acolher" className='barra-link'>
-                                        <img src={LerAcolher} className="img-fluid" alt='Logo Anj Resgate'/>
-                                    </Link>
-                                </div>
-                                <div className='card-desc-campanhas'>
-                                    <p>São Paulo</p>
-                                    <h5>Ler e acolher</h5>
-                                    <p>
-                                        <Link to="/instituicoes">Pilares</Link>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className='row'>
-                        <div className='col-md-4'>
-                            <div className='card-campanhas'>
-                                <div className='img-largura'>
-                                    <Link to="/campanha/vicentinos" className='barra-link'>
-                                        <img src={Vicentinos} className="img-fluid" alt='Logo Igr Adventista'/>
-                                    </Link>
-                                </div>
-                                <div className='card-desc-campanhas'>
-                                    <p>Jundiaí, São Paulo</p>
-                                    <h5>Vicentinos</h5>
-                                    <p>
-                                        <Link to="/instituicoes">Igreja Católica - Diocese de Jundiaí</Link>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='col-md-4'>
-                            <div className='card-campanhas'>
-                                <div className='img-largura'>
-                                    <Link to="/campanha/resgate-criancas" className='barra-link'>
-                                        <img src={ResgateCriancas} className="img-fluid" alt='Logo Soc Catolica'/>
-                                    </Link>
-                                </div>
-                                <div className='card-desc-campanhas'>
-                                    <p>Itu, São Paulo</p>
-                                    <h5>Resgate de crianças</h5>
-                                    <p>
-                                        <Link to="/instituicoes">Anjos do Resgate</Link>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='col-md-4'>
-                            <div className='card-campanhas'>
-                                <div className='img-largura'>
-                                    <Link to="/campanha/ler-e-acolher" className='barra-link'>
-                                        <img src={LerAcolher} className="img-fluid" alt='Logo Anj Resgate'/>
-                                    </Link>
-                                </div>
-                                <div className='card-desc-campanhas'>
-                                    <p>São Paulo</p>
-                                    <h5>Ler e acolher</h5>
-                                    <p>
-                                        <Link to="/instituicoes">Pilares</Link>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                            </div>)
+                        }) }
                     </div>
 
                     <div className='row'>
