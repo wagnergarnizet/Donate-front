@@ -67,14 +67,20 @@ export default function Campanha(){
             .then(response => response.json())
             .then(data => {
                 setDadosCampanha(data);
-            });
-        console.log("DadosCampanhaInstituicaoId",dadosCampanha); //VER depois
-        fetch(`/Instituicao/${dadosCampanha.instituicaoId}`, requestOptions)
-            .then(response => response.json())
-            .then(data => {
-                setDadosInstituicao(data);
-            });
+            });        
     }, []);
+
+    if(dadosCampanha.instituicaoId !== undefined) {
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        };
+        fetch(`/Instituicao/${dadosCampanha.instituicaoId}`, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            setDadosInstituicao(data);
+        });
+    }
 
     return (
         <section id="campanha-conteudo">
