@@ -23,6 +23,8 @@ export default class Campanhas extends Component {
         this.saveCampaign = this.saveCampaign.bind(this);
         this.seeProducts = this.seeProducts.bind(this);
         this.openNewCampaign = this.openNewCampaign.bind(this);
+        this.getAllCampaigns = this.getAllCampaigns.bind(this);
+        this.getAllProducts = this.getAllProducts.bind(this);
 
         this.user = localStorage.getItem('user');
         this.token = localStorage.getItem('token');
@@ -30,61 +32,116 @@ export default class Campanhas extends Component {
 
     componentDidMount(){
         if((this.user !== "" && this.token !== "") && (this.user !== null && this.token !== null)){
-            const requestOptions = {
-                method: 'GET',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + this.token
-                }
-            };
-
-            fetch('/Campanha', requestOptions)
-                .then(response => response.json())
-                .then(data => {
-                    for(var i = 0; i < data.length; i++){
-                        data[i].dt_inicio = new Date(data[i].dt_inicio).toLocaleDateString('pt-br');
-                        data[i].dt_fim    = new Date(data[i].dt_fim).toLocaleDateString('pt-br');
-                    }
-    
-                    this.setState({
-                        campanhas: data
-                    });
-                });
-
-            fetch('/Produto', requestOptions)
-                .then(response => response.json())
-                .then(data => {
-                    var prods = [];
-    
-                    for(var i = 0; i < data.length; i++){
-                        prods.push({
-                            value: data[i].id,
-                            label: data[i].nome,
-                            imagem: data[i].imagem
-                        });
-                    }
-    
-                    this.setState({
-                        produtos: prods
-                    });
-                });
+            this.getAllCampaigns();
+            this.getAllProducts();
         }else{
             alert('Você não está logado!');
             window.location.href = "/admin/login";
         }
     }
 
+    getAllCampaigns(){
+        const requestOptions = {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.token
+            }
+        };
+
+        fetch('/Campanha', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                for(var i = 0; i < data.length; i++){
+                    data[i].dt_inicio = new Date(data[i].dt_inicio).toLocaleDateString('pt-br');
+                    data[i].dt_fim    = new Date(data[i].dt_fim).toLocaleDateString('pt-br');
+                }
+
+                this.setState({
+                    campanhas: data
+                });
+            });
+    }
+
+    getAllProducts(){
+        const requestOptions = {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.token
+            }
+        };
+
+        fetch('/Produto', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                var prods = [];
+
+                for(var i = 0; i < data.length; i++){
+                    prods.push({
+                        value: data[i].id,
+                        label: data[i].nome,
+                        imagem: data[i].imagem,
+                        quantidade: data[i].qtde
+                    });
+                }
+
+                this.setState({
+                    produtos: prods
+                });
+            });
+    }
+
     openNewCampaign(){
-        var newCampaign = document.querySelector(".new");
+        var newCampaign = document.querySelector("#newMov.new");
         newCampaign.classList.add("active");
         document.querySelector(".overlay").classList.add("active");
     }
 
     checkIfBoxesOpen(){
+        this.getAllCampaigns();
         var actives = document.querySelectorAll(".active");
         for(var i = 0; i < actives.length; i++){
             actives[i].classList.remove("active");
         }
+    }
+
+    closeProdAba(){
+        var actives = document.querySelector("#newProd.active");
+        actives.classList.remove("active");
+        document.querySelector(".overlay").classList.remove("active");
+        this.getProdsFromCampaign();
+    }
+
+    getProdsFromCampaign() {
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.token
+            }
+        };
+        
+        fetch('/Produto_Campanha', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                var id = this.state.campanha.id;
+                var prod = [];
+
+                for(var i = 0; i < data.length; i++){
+                    if(data[i].campanhaId === id){
+                        for(var j = 0; j < this.state.produtos.length; j++){
+                            if(this.state.produtos[j].value === data[i].produtoId){
+                                prod.push(this.state.produtos[j]);
+                            }
+                        }
+                    }
+                }
+
+                this.setState({
+                    "prodCampanhas": prod
+                });
+            });
     }
 
     seeProducts(id){
@@ -105,34 +162,66 @@ export default class Campanhas extends Component {
                     campanha: data
                 });
 
-                fetch('/Produto_Campanha', requestOptions)
-                    .then(response => response.json())
-                    .then(data => {
-                        var id = this.state.campanha.id;
-                        var prod = [];
-
-                        for(var i = 0; i < data.length; i++){
-                            if(data[i].campanhaId === id){
-                                for(var j = 0; j < this.state.produtos.length; j++){
-                                    if(this.state.produtos[j].value === data[i].produtoId){
-                                        prod.push(this.state.produtos[j]);
-                                    }
-                                }
-                            }
-                        }
-
-                        this.setState({
-                            "prodCampanhas": prod
-                        });
-                    });
-
+                this.getProdsFromCampaign();
                 document.querySelector("#productsCampaign").classList.add("active");
+            });
+    }
+
+    saveProd(e){
+        e.preventDefault();
+        
+        const requestOptions = {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.token
+            },
+            body: JSON.stringify({
+                "produtoId": parseInt(this.state.produtoId),
+                "campanhaId": parseInt(this.state.campanha.id),
+                "quantidade": parseInt(this.state.qtde)
+            })
+        };
+
+        fetch('/Produto_Campanha', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                alert("Produto Salvo!");
+                this.closeProdAba();
             });
     }
 
     saveCampaign(e){
         e.preventDefault();
         console.log("saveCampaign");
+
+        // let form = new FormData();
+        // form.append('file', this.state.imagem);
+
+        // const optReq = {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "multipart/form-data",
+        //         'Authorization': 'Bearer ' + this.token
+        //     },
+        //     body: form
+        // }
+
+        // fetch('/api/v1/file/upload', optReq)
+        //     .then(response => {
+        //         if(response.ok){
+        //             response.json().then(
+        //                 success => {
+        //                     this.setState({
+        //                         imagem: success.image
+        //                     })
+        //                 }
+        //             )
+        //         }else{
+        //             console.log("Imagem não salva!");
+        //             console.log(response);
+        //         }
+        //     });
 
         const requestOptions = {
             method: 'POST',
@@ -152,30 +241,29 @@ export default class Campanhas extends Component {
         fetch('/Campanha', requestOptions)
             .then(response => response.json())
             .then(data => {
-                console.log("Salvou campanha " + data.id);
+                // console.log("Salvou campanha " + data.id);
+                // for(var i = 0; i < this.state.produtosSelecionados.length; i++){
+                //     console.log("Salvar prod " + i);
 
-                for(var i = 0; i < this.state.produtosSelecionados.length; i++){
-                    console.log("Salvar prod " + i);
+                //     const requestOptions = {
+                //         method: 'POST',
+                //         headers: { 
+                //             'Content-Type': 'application/json',
+                //             'Authorization': 'Bearer ' + this.token
+                //         },
+                //         body: JSON.stringify({
+                //             "produtoId": this.state.produtosSelecionados[i],
+                //             "campanhaId": data.id,
+                //             "quantidade": 1
+                //         })
+                //     };
 
-                    const requestOptions = {
-                        method: 'POST',
-                        headers: { 
-                            'Content-Type': 'application/json',
-                            'Authorization': 'Bearer ' + this.token
-                        },
-                        body: JSON.stringify({
-                            "produtoId": this.state.produtosSelecionados[i],
-                            "campanhaId": data.id,
-                            "quantidade": 1
-                        })
-                    };
-
-                    fetch('/Produto_Campanha', requestOptions)
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log("Salvou produto " + i);
-                        });
-                }
+                //     fetch('/Produto_Campanha', requestOptions)
+                //         .then(response => response.json())
+                //         .then(data => {
+                //             console.log("Salvou produto " + i);
+                //         });
+                // }
 
                 alert("Campanha Salva!");
                 this.checkIfBoxesOpen();
@@ -188,6 +276,12 @@ export default class Campanhas extends Component {
         this.setState({
             produtosSelecionados: valueProd
         });
+    }
+
+    openNewProds() {
+        var newProd = document.querySelector("#newProd.new");
+        newProd.classList.add("active");
+        document.querySelector(".overlay").classList.add("active");
     }
 
     render(){
@@ -248,16 +342,24 @@ export default class Campanhas extends Component {
                                                         <div className="col-md-9 title-img-pequena">
                                                             <p>{p.label}</p>
                                                             <div className="progress">
-                                                                <div className="progress-bar bg-danger" role="progressbar" aria-label="arroz-progress-bar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                <div className="progress-bar bg-danger" role="progressbar" aria-label="arroz-progress-bar" aria-valuenow="40" aria-valuemin="0" aria-valuemax={p.quantidade}></div>
                                                             </div>
                                                             <p>
-                                                                20 /&nbsp;<b>100</b>&nbsp;unidades
+                                                                20 /&nbsp;<b>{p.quantidade}</b>&nbsp;unidades
                                                             </p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             );
                                         })}
+                                    </div>
+                                    <div className='row'>
+                                        <div className='col-md-3'>
+                                            <button className='btn-new' onClick={ () => { this.openNewProds() } }>
+                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.325 15H10.825V10.85H15V9.35H10.825V5H9.325V9.35H5V10.85H9.325V15ZM10 20C8.58333 20 7.26667 19.7458 6.05 19.2375C4.83333 18.7292 3.775 18.025 2.875 17.125C1.975 16.225 1.27083 15.1667 0.7625 13.95C0.254167 12.7333 0 11.4167 0 10C0 8.6 0.254167 7.29167 0.7625 6.075C1.27083 4.85833 1.975 3.8 2.875 2.9C3.775 2 4.83333 1.29167 6.05 0.775C7.26667 0.258333 8.58333 0 10 0C11.4 0 12.7083 0.258333 13.925 0.775C15.1417 1.29167 16.2 2 17.1 2.9C18 3.8 18.7083 4.85833 19.225 6.075C19.7417 7.29167 20 8.6 20 10C20 11.4167 19.7417 12.7333 19.225 13.95C18.7083 15.1667 18 16.225 17.1 17.125C16.2 18.025 15.1417 18.7292 13.925 19.2375C12.7083 19.7458 11.4 20 10 20ZM10 18.5C12.3333 18.5 14.3333 17.6667 16 16C17.6667 14.3333 18.5 12.3333 18.5 10C18.5 7.66667 17.6667 5.66667 16 4C14.3333 2.33333 12.3333 1.5 10 1.5C7.66667 1.5 5.66667 2.33333 4 4C2.33333 5.66667 1.5 7.66667 1.5 10C1.5 12.3333 2.33333 14.3333 4 16C5.66667 17.6667 7.66667 18.5 10 18.5Z" fill="white"/></svg>
+                                                Adicionar Produto
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <button className='see-less' onClick={() => { this.checkIfBoxesOpen() }}>
@@ -285,36 +387,28 @@ export default class Campanhas extends Component {
                             <br/>
                             <input type="date" name="dataFim" id='dataFim' className='form-control' onChange={(e) => this.setState({dataFim: new Date(e.target.value).toJSON() })}required/>
                         </div>
-                        <div className='form-group'>
-                            <label>Produtos</label>
-                            <select name='produtos' multiple={true} defaultValue={this.state.produtosSelecionados} onChange={(e) => this.handleChange(e.target.value)} className='form-control'>
-                                <option value="">Selecione o produto</option>
-                                { this.state.produtos.map((p) => {
-                                    return (
-                                        <option value={ p.value } key={ p.value }>{ p.label }</option>
-                                    );
-                                })}
-                            </select>
-                            {/* <div className='row'>
-                                <div className='col-9'> */}
-                                    {/* <select name='produtos' multiple={true} defaultValue={this.state.produtos} onChange={(e) => this.setState({produtos: e.target.value})} className='form-control'>
-                                        <option value="">Selecione o produto</option>
-                                        <option value="arroz">Arroz</option>
-                                    </select> */}
-                                {/* </div>
-                                <div className='col-3'>
-                                    <button type='button' className='btn-more-product'>
-                                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="24" fill="#3DBD8A"/><path d="M30.1216 24.488H25.2736V29.456H22.7296V24.488H17.8816V22.184H22.7296V17.216H25.2736V22.184H30.1216V24.488Z" fill="white"/></svg>
-                                    </button>
-                                </div>
-                            </div> */}
-                        </div>
                         <div className="form-group">
                             <label htmlFor="imagem">Upload da Imagem da Campanha</label>
-                            <input type="file" className="form-control" name="imagem" id="imagem" aria-describedby="imagemhelpId" placeholder="imagem" onChange={(e) => this.setState({imagem: e.target.value})} required/>
+                            <input type="file" className="form-control" name="imagem" id="imagem" onChange={(e) => this.setState({imagem: e.target.value})} required/>
                         </div>
                         <button type="submit" className='btn-submit' onClick={ (e) => {this.saveCampaign(e)} }>Salvar</button>
                         <button type="button" className='btn-cancel' onClick={ () => {this.checkIfBoxesOpen()} }>Cancelar</button>
+                    </form>
+                </div>
+                <div id="newProd" className='new'>
+                    <h2>Adicionar Produto</h2>
+                    <span className='line'></span>
+                    <form>
+                        <div className='form-group'>
+                            <label htmlFor="nomeProd">Nome do produto</label>
+                            <input type="text" name="nomeProd" id='nomeProd' className='form-control' onChange={(e) => this.setState({produtoId: e.target.value})} required/>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="qtde">Quantidade</label>
+                            <input type="number" className="form-control" name="qtde" id="qtde" onChange={(e) => this.setState({qtde: e.target.value})} required/>
+                        </div>
+                        <button type="submit" className='btn-submit' onClick={ (e) => {this.saveProd(e)} }>Salvar</button>
+                        <button type="button" className='btn-cancel' onClick={ () => {this.closeProdAba()} }>Cancelar</button>
                     </form>
                 </div>
                 <div className='overlay' onClick={ () => {this.checkIfBoxesOpen()}}></div>
