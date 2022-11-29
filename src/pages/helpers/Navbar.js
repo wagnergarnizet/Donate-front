@@ -47,7 +47,7 @@ export default function Navbar(){
                                 <Link onClick={openMenu} to="/admin/login">Login</Link>
                             </li>
                             <li>
-                                <Link onClick={openMenu} to="/admin/subscribe" className='btn btn-green'>Cadastre-se</Link>
+                                <Link onClick={openMenu} to="/admin/first-access" className='btn btn-green'>Cadastre-se</Link>
                             </li>
                         </ul>
                     </div>
