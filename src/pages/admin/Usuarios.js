@@ -7,6 +7,7 @@ export default class Usuarios extends Component{
         this.openUser = this.openUser.bind(this);
         this.deleteUser = this.deleteUser.bind(this);
         this.checkIfBoxesOpen = this.checkIfBoxesOpen.bind(this);
+        this.getAll = this.getAll.bind(this);
 
         this.state = {
             id: "",
@@ -19,38 +20,92 @@ export default class Usuarios extends Component{
             instituicoes: [],
             usuarios: []
         };
+
+        this.user = localStorage.getItem('user');
+        this.token = localStorage.getItem('token');
     }
 
     componentDidMount(){
-        const user = localStorage.getItem('user');
-        const token = localStorage.getItem('token');
-        if((user != "" && token != "") && (user != null && token != null)){
-            const requestOptions = {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' }
-            };
-            fetch('/Usuario', requestOptions)
-                .then(response => response.json())
-                .then(data => {
-                    this.setState({
-                        usuarios: data
-                    });
-                });
+        if((this.user != "" && this.token != "") && (this.user != null && this.token != null)){
+            this.getAll();
         }else{
             alert('Você não está logado!');
             window.location.href = "/admin/login";
         }
     }
+    
+    getAll(){
+        const requestOptions = {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.token
+            }
+        };
+        fetch('/Usuario', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    usuarios: data
+                });
+            });
+    }
 
-    openUser(){
+    openUser(id = ""){
+        if(id != ""){
+            const requestOptions = {
+                method: 'GET',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + this.token
+                }
+            };
+            fetch('/Usuario/' + id, requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                    this.setState({
+                        id: data.id,
+                        nome: data.nome,
+                        funcao: data.funcao,
+                        senha: data.senha,
+                        email: data.email,
+                        instituicaoId: data.instituicaoId,
+                    });
+                });
+        }else{
+            this.setState({
+                id: "",
+                nome: "",
+                funcao: "",
+                senha: "",
+                email: "",
+                instituicaoId: "",
+            });
+        }
         document.querySelector(".new").classList.add("active");
         document.querySelector(".overlay").classList.add("active");
     }
     
-    deleteUser(e){
+    deleteUser(id, e){
         if(window.confirm("Deseja mesmo apagar esse usuário?")){
-            var id = e.target.getAttribute("data-href");
-            window.alert("Usuário excluído!");
+            const requestOptions = {
+                method: 'DELETE',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + this.token
+                }
+            };
+            fetch('/Usuario/' + id, requestOptions)
+                .then(response => {
+                    if(response.ok){
+                        response.json().then(data => {
+                            this.getAll();
+                        })
+                    }else{
+                        console.log(response);
+                        alert("Erro ao deletar o usuário!");
+                    }
+                });
         }
     }
     
@@ -67,9 +122,9 @@ export default class Usuarios extends Component{
             "nome": this.state.nome,
             "email": this.state.email,
             "senha": this.state.senha,
-            "funcao": this.state.funcao,
-            "instituicaoId": this.state.instituicaoId,
-            "ativo": 1
+            "funcao": parseInt(this.state.funcao),
+            "instituicaoId": parseInt(this.state.instituicaoId),
+            "ativo": true
         };
 
         if(this.state.id !== ""){
@@ -87,7 +142,10 @@ export default class Usuarios extends Component{
         }else{
             const requestOptions = {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + this.token
+                },
                 body: JSON.stringify(bodyRequisition)
             };
             fetch('/Usuario', requestOptions)
@@ -125,20 +183,22 @@ export default class Usuarios extends Component{
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    { this.state.usuarios.map((u) => {
-                                        <tr key={u.id}>
-                                            <td>{u.nome}</td>
-                                            <td>{u.email}</td>
-                                            <td>{u.funcao}</td>
-                                            <td>
-                                                <button className='btnEdit' onClick={() => {this.openUser(u.id)}}>
-                                                    <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 15.2496V18.9996H3.75L14.81 7.93957L11.06 4.18957L0 15.2496ZM17.71 5.03957C18.1 4.64957 18.1 4.01957 17.71 3.62957L15.37 1.28957C14.98 0.89957 14.35 0.89957 13.96 1.28957L12.13 3.11957L15.88 6.86957L17.71 5.03957Z" fill="#444444"/></svg>
-                                                </button>
-                                                <button className='btnDelete' onClick={() => {this.deleteUser(u.id)}} data-href="1">
-                                                    <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 6V16H3V6H11ZM9.5 0H4.5L3.5 1H0V3H14V1H10.5L9.5 0ZM13 4H1V16C1 17.1 1.9 18 3 18H11C12.1 18 13 17.1 13 16V4Z" fill="#201F20" fill-opacity="0.8"/></svg>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                    { this.state.usuarios.map((user) => {
+                                        return(
+                                            <tr key={user.id}>
+                                                <td>{user.nome}</td>
+                                                <td>{user.email}</td>
+                                                <td>{user.funcao}</td>
+                                                <td>
+                                                    <button className='btnEdit' onClick={() => {this.openUser(user.id)}}>
+                                                        <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 15.2496V18.9996H3.75L14.81 7.93957L11.06 4.18957L0 15.2496ZM17.71 5.03957C18.1 4.64957 18.1 4.01957 17.71 3.62957L15.37 1.28957C14.98 0.89957 14.35 0.89957 13.96 1.28957L12.13 3.11957L15.88 6.86957L17.71 5.03957Z" fill="#444444"/></svg>
+                                                    </button>
+                                                    <button className='btnDelete' onClick={() => {this.deleteUser(user.id)}} data-href="1">
+                                                        <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 6V16H3V6H11ZM9.5 0H4.5L3.5 1H0V3H14V1H10.5L9.5 0ZM13 4H1V16C1 17.1 1.9 18 3 18H11C12.1 18 13 17.1 13 16V4Z" fill="#201F20"/></svg>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        );
                                     })}
                                     </tbody>
                                 </table>
@@ -164,13 +224,14 @@ export default class Usuarios extends Component{
                         </div>
                         <div className='form-group'>
                             <label htmlFor="funcao">Função *</label>
-                            <input type="text" nome="funcao" id='funcao' className='form-control' defaultValue={this.state.funcao} onChange={(e) => this.setState({funcao: e.target.value})} required/>
+                            <select name="funcao" id="funcao" className='form-control' value={this.state.funcao} onChange={(e) => { this.setState({funcao: e.target.value}) }}>
+                                <option value="" disabled>Selecionar Função</option>
+                                <option value="1">Administrador</option>
+                                <option value="2">Usuário</option>
+                                <option value="3">Consulta</option>
+                            </select>
                         </div>
-                        <div className='form-group'>
-                            <label htmlFor="instituicao">Instituição *</label>
-                            <input type="text" nome="instituicao" id='instituicao' className='form-control' defaultValue={this.state.instituicaoId} onChange={(e) => this.setState({instituicaoId: e.target.value})} required/>
-                        </div>
-                        <button type="submit" className='btn-submit' onClick={() => {this.saveUser()}}>Salvar</button>
+                        <button type="submit" className='btn-submit' onClick={(e) => {this.saveUser(e)}}>Salvar</button>
                         <button type="button" className='btn-cancel' onClick={() => {this.checkIfBoxesOpen()}}>Cancelar</button>
                     </form>
                 </div>
