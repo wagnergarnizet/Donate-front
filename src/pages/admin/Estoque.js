@@ -24,37 +24,58 @@ export default class Estoque extends Component{
         const user = localStorage.getItem('user');
         const token = localStorage.getItem('token');
         if((user != "" && token != "") && (user != null && token != null)){
-            const requestOptions = {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' }
-            };
-            fetch('/Estoque', requestOptions)
-                .then(response => response.json())
-                .then(data => {
-                    this.setState({
-                        estoque: data
-                    });
-                });
-                
-            fetch('/Campanha', requestOptions)
-                .then(response => response.json())
-                .then(data => {
-                    this.setState({
-                        campanhas: data
-                    });
-                });
-
-            fetch('/Produto', requestOptions)
-                .then(response => response.json())
-                .then(data => {
-                    this.setState({
-                        produtos: data
-                    });
-                });
+            this.getAllEstoque();
+            this.getAllCampanha();
+            this.getAllProdutos();
         }else{
             alert('Você não está logado!');
             window.location.href = "/admin/login";
         }
+    }
+
+    getAllEstoque(){
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        };
+
+        fetch('/Estoque', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    estoque: data
+                });
+            });
+    }
+
+    getAllCampanha(){
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        };
+            
+        fetch('/Campanha', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    campanhas: data
+                });
+            });
+    }
+
+    getAllProdutos(){
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        };
+
+        fetch('/Produto', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    produtos: data
+                });
+            });
     }
 
     openEditRegister(id = ""){
@@ -67,11 +88,12 @@ export default class Estoque extends Component{
                 .then(response => response.json())
                 .then(data => {
                     this.setState({
-                        produtoId: data.produtoId,
-                        campanhaId: data.campanhaId,
-                        quantidade: data.quantidade,
-                        movimentacao: data.tipo,
-                        id: data.id,
+                        produtoId: data.ProdutoId,
+                        campanhaId: data.CampanhaId,
+                        quantidade: data.Qtde,
+                        movimentacao: data.Tipo,
+                        observacao: data.Observacao,
+                        id: data.Id,
                     });
                 });
         }
@@ -82,6 +104,7 @@ export default class Estoque extends Component{
     }
     
     checkIfBoxesOpen(props){
+        this.getAllEstoque();
         var actives = document.querySelectorAll(".active");
         for(var i = 0; i < actives.length; i++){
             actives[i].classList.remove("active");
@@ -90,7 +113,6 @@ export default class Estoque extends Component{
 
     onSubmitEstoque(e) {
         e.preventDefault();
-
         const requestOptions = {
             method: 'POST',
             headers: { 
@@ -168,9 +190,9 @@ export default class Estoque extends Component{
                                         <h1>Estoque</h1>
                                         <div className='legendas'>
                                             <p>Legenda:</p>
-                                            <p><span className='status green'></span> Estoque OK</p>
-                                            <p><span className='status yellow'></span> Estoque baixo</p>
-                                            <p><span className='status red'></span> Estoque crítico</p>
+                                            <p><span className='status green'></span> Entrada</p>
+                                            {/* <p><span className='status yellow'></span> Estoque baixo</p> */}
+                                            <p><span className='status red'></span> Saída</p>
                                         </div>
                                     </div>
                                     <div className='col-md-3'>
@@ -192,14 +214,34 @@ export default class Estoque extends Component{
                                     </thead>
                                     <tbody>
                                         { this.state.estoque.map((e) => {
+                                            var produto, campanha, status;
+
+                                            if(e.CampanhaId == null && e.CampanhaId == ""){
+                                                campanha = "Sem campanha"
+                                            }else{
+                                                campanha = e.CampanhaId;
+                                            }
+
+                                            if(e.ProdutoId == null && e.ProdutoId == ""){
+                                                produto = "Sem produto";
+                                            }else{
+                                                produto = e.Produto.Nome;
+                                            }
+
+                                            if(e.Tipo === 1){
+                                                status = "status green";
+                                            }else if(e.Tipo === 2){
+                                                status = "status red";
+                                            }
+
                                             return(
                                                 <tr key={e.Id}>
                                                     <td scope="row">
-                                                        <span className='status green'></span>
+                                                        <span className={status}></span>
                                                     </td>
-                                                    <td>{ e.Campanha }</td>
-                                                    <td>{ e.Produto }</td>
-                                                    <td>{ e.Quantidade }</td>
+                                                    <td>{ campanha }</td>
+                                                    <td>{ produto }</td>
+                                                    <td>{ e.Qtde }</td>
                                                     <td>
                                                         <button className='btnEdit' onClick={ () => {this.openEditRegister(e.Id)}}>
                                                             <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 15.2496V18.9996H3.75L14.81 7.93957L11.06 4.18957L0 15.2496ZM17.71 5.03957C18.1 4.64957 18.1 4.01957 17.71 3.62957L15.37 1.28957C14.98 0.89957 14.35 0.89957 13.96 1.28957L12.13 3.11957L15.88 6.86957L17.71 5.03957Z" fill="#444444"/></svg>

@@ -67,7 +67,7 @@ export default function Footer(){
                             </div>
                         </div>
                     </div>
-                    <div className="col-12 col-md-3 mb-mob">
+                    {/* <div className="col-12 col-md-3 mb-mob">
                         <h3>Receba as notificações</h3>
                         <p>Receba as notificações acerca de novas campanhas e faça a dferença!</p>
                         <form method='POST'>
@@ -77,7 +77,7 @@ export default function Footer(){
                             </div>
                             <button type="submit" name="submit" id="submit" className="btn">Enviar</button>
                         </form>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </footer>
