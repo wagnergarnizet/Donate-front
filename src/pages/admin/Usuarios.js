@@ -64,12 +64,12 @@ export default class Usuarios extends Component{
                 .then(response => response.json())
                 .then(data => {
                     this.setState({
-                        id: data.id,
-                        nome: data.nome,
-                        funcao: data.funcao,
-                        senha: data.senha,
-                        email: data.email,
-                        instituicaoId: data.instituicaoId,
+                        id: data.Id,
+                        nome: data.Nome,
+                        funcao: data.Funcao,
+                        senha: data.Senha,
+                        email: data.Email,
+                        instituicaoId: data.InstituicaoId,
                     });
                 });
         }else{
@@ -98,7 +98,7 @@ export default class Usuarios extends Component{
             fetch('/Usuario/' + id, requestOptions)
                 .then(response => {
                     if(response.ok){
-                        response.json().then(data => {
+                        response.text().then(data => {
                             this.getAll();
                         })
                     }else{
@@ -114,6 +114,7 @@ export default class Usuarios extends Component{
         for(var i = 0; i < actives.length; i++){
             actives[i].classList.remove("active");
         }
+        this.getAll();
     }
 
     saveUser(e){
@@ -134,7 +135,7 @@ export default class Usuarios extends Component{
                 body: JSON.stringify(bodyRequisition)
             };
             fetch('/Usuario/' + this.state.id, requestOptions)
-                .then(response => response.json())
+                .then(response => response.text())
                 .then(data => {
                     alert("Usuário Salvo!");
                     this.checkIfBoxesOpen();
@@ -149,7 +150,7 @@ export default class Usuarios extends Component{
                 body: JSON.stringify(bodyRequisition)
             };
             fetch('/Usuario', requestOptions)
-                .then(response => response.json())
+                .then(response => response.text())
                 .then(data => {
                     alert("Usuário Salvo!");
                     this.checkIfBoxesOpen();
@@ -184,21 +185,36 @@ export default class Usuarios extends Component{
                                     </thead>
                                     <tbody>
                                     { this.state.usuarios.map((user) => {
-                                        return(
-                                            <tr key={user.id}>
-                                                <td>{user.nome}</td>
-                                                <td>{user.email}</td>
-                                                <td>{user.funcao}</td>
-                                                <td>
-                                                    <button className='btnEdit' onClick={() => {this.openUser(user.id)}}>
-                                                        <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 15.2496V18.9996H3.75L14.81 7.93957L11.06 4.18957L0 15.2496ZM17.71 5.03957C18.1 4.64957 18.1 4.01957 17.71 3.62957L15.37 1.28957C14.98 0.89957 14.35 0.89957 13.96 1.28957L12.13 3.11957L15.88 6.86957L17.71 5.03957Z" fill="#444444"/></svg>
-                                                    </button>
-                                                    <button className='btnDelete' onClick={() => {this.deleteUser(user.id)}} data-href="1">
-                                                        <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 6V16H3V6H11ZM9.5 0H4.5L3.5 1H0V3H14V1H10.5L9.5 0ZM13 4H1V16C1 17.1 1.9 18 3 18H11C12.1 18 13 17.1 13 16V4Z" fill="#201F20"/></svg>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        );
+                                        if(user.Ativo != 0){
+                                            var funcao;
+                                            switch(user.Funcao){
+                                                case 1:
+                                                    funcao = "Administrador";
+                                                    break;
+                                                case 2:
+                                                    funcao = "Usuário";
+                                                    break;
+                                                case 3:
+                                                    funcao = "Consulta";
+                                                    break;
+                                            }
+    
+                                            return(
+                                                <tr key={user.Id}>
+                                                    <td>{user.Nome}</td>
+                                                    <td>{user.Email}</td>
+                                                    <td>{funcao}</td>
+                                                    <td>
+                                                        <button className='btnEdit' onClick={() => {this.openUser(user.Id)}}>
+                                                            <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 15.2496V18.9996H3.75L14.81 7.93957L11.06 4.18957L0 15.2496ZM17.71 5.03957C18.1 4.64957 18.1 4.01957 17.71 3.62957L15.37 1.28957C14.98 0.89957 14.35 0.89957 13.96 1.28957L12.13 3.11957L15.88 6.86957L17.71 5.03957Z" fill="#444444"/></svg>
+                                                        </button>
+                                                        <button className='btnDelete' onClick={() => {this.deleteUser(user.Id)}} data-href="1">
+                                                            <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 6V16H3V6H11ZM9.5 0H4.5L3.5 1H0V3H14V1H10.5L9.5 0ZM13 4H1V16C1 17.1 1.9 18 3 18H11C12.1 18 13 17.1 13 16V4Z" fill="#201F20"/></svg>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        }
                                     })}
                                     </tbody>
                                 </table>
@@ -224,7 +240,7 @@ export default class Usuarios extends Component{
                         </div>
                         <div className='form-group'>
                             <label htmlFor="funcao">Função *</label>
-                            <select name="funcao" id="funcao" className='form-control' value={this.state.funcao} onChange={(e) => { this.setState({funcao: e.target.value}) }}>
+                            <select name="funcao" id="funcao" className='form-control' value={this.state.funcao} onChange={(e) => { this.setState({funcao: e.target.value}) }} required>
                                 <option value="" disabled>Selecionar Função</option>
                                 <option value="1">Administrador</option>
                                 <option value="2">Usuário</option>

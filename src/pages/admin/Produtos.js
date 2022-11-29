@@ -58,12 +58,12 @@ export default class Produtos extends Component{
                 .then(response => response.json())
                 .then(data => {
                     this.setState({
-                        id: data.id,
-                        nome: data.nome,
-                        tipoMedida: data.tipo,
-                        qtde: data.qtde,
-                        volume: data.volume,
-                        imagem: data.imagem,
+                        id: data.Id,
+                        nome: data.Nome,
+                        tipoMedida: data.Tipo,
+                        qtde: data.Qtde,
+                        volume: data.Volume,
+                        imagem: data.Imagem,
                     });
                 });
         }else{
@@ -88,7 +88,7 @@ export default class Produtos extends Component{
                 headers: { 'Content-Type': 'application/json' }
             };
             fetch('/Produto/' + id, requestOptions)
-                .then(response => response.json())
+                .then(response => response.text())
                 .then(data => {
                     this.getAll();
                 });
@@ -96,6 +96,15 @@ export default class Produtos extends Component{
     }
     
     checkIfBoxesOpen(props){
+        this.setState({
+            id: "",
+            nome: "",
+            tipoMedida: "",
+            qtde: "",
+            volume: "",
+            imagem: "",
+        });
+
         var actives = document.querySelectorAll(".active");
         for(var i = 0; i < actives.length; i++){
             actives[i].classList.remove("active");
@@ -124,7 +133,7 @@ export default class Produtos extends Component{
                 body: JSON.stringify(bodyRequisition)
             };
             fetch('/Produto/' + this.state.id, requestOptions)
-                .then(response => response.json())
+                .then(response => response.text())
                 .then(data => {
                     alert("Produto Salvo!");
                     this.getAll();
@@ -141,7 +150,7 @@ export default class Produtos extends Component{
                 body: JSON.stringify(bodyRequisition)
             };
             fetch('/Produto', requestOptions)
-                .then(response => response.json())
+                .then(response => response.text())
                 .then(data => {
                     alert("Produto Salvo!");
                     this.getAll();
@@ -192,7 +201,7 @@ export default class Produtos extends Component{
                                 <table className="table">
                                     <thead>
                                         <tr>
-                                            <th></th>
+                                            {/* <th></th> */}
                                             <th>Nome do produto</th>
                                             <th>Quantidade</th>
                                             <th>Volume</th>
@@ -203,19 +212,19 @@ export default class Produtos extends Component{
                                     <tbody>
                                     { this.state.produtos.map((p) => {
                                         return(
-                                            <tr key={p.id}>
-                                                <td scope="row">
-                                                    <img src={p.imagem} alt={p.nome} className='img-fluid'/>
-                                                </td>
-                                                <td>{p.nome}</td>
-                                                <td>{p.qtde}</td>
-                                                <td>{ this.switchVolume(p.volume) }</td>
+                                            <tr key={p.Id}>
+                                                {/* <td scope="row">
+                                                    <img src={imgArroz} alt={p.Nome} className='img-fluid'/>
+                                                </td> */}
+                                                <td>{p.Nome}</td>
+                                                <td>{p.Qtde}</td>
+                                                <td>{ this.switchVolume(p.Volume) }</td>
                                                 {/* <td>{p.categoriaId}</td> */}
                                                 <td>
-                                                    <button className='btnEdit' onClick={() => { this.openProduct(p.id)} }>
+                                                    <button className='btnEdit' onClick={() => { this.openProduct(p.Id)} }>
                                                         <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 15.2496V18.9996H3.75L14.81 7.93957L11.06 4.18957L0 15.2496ZM17.71 5.03957C18.1 4.64957 18.1 4.01957 17.71 3.62957L15.37 1.28957C14.98 0.89957 14.35 0.89957 13.96 1.28957L12.13 3.11957L15.88 6.86957L17.71 5.03957Z" fill="#444444"/></svg>
                                                     </button>
-                                                    <button className='btnDelete' onClick={() => { this.deleteProduct(p.id) } }>
+                                                    <button className='btnDelete' onClick={() => { this.deleteProduct(p.Id) } }>
                                                         <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 6V16H3V6H11ZM9.5 0H4.5L3.5 1H0V3H14V1H10.5L9.5 0ZM13 4H1V16C1 17.1 1.9 18 3 18H11C12.1 18 13 17.1 13 16V4Z" fill="#201F20"/></svg>
                                                     </button>
                                                 </td>
@@ -242,7 +251,7 @@ export default class Produtos extends Component{
                         </div>
                         <div className='form-group'>
                             <label htmlFor="volume">Volume (ex. Kg, Ml)*</label>
-                            <select name="volume" id="volume" className='form-control' defaultValue={this.state.volume} onChange={(e) => { this.setState({volume: e.target.value}) }}>
+                            <select name="volume" id="volume" className='form-control' value={this.state.volume} onChange={(e) => { this.setState({volume: e.target.value}) }} required>
                                 <option value="" disabled>Selecionar Volume</option>
                                 <option value="1">Kilos</option>
                                 <option value="2">Litros</option>
@@ -251,10 +260,10 @@ export default class Produtos extends Component{
                                 <option value="5">Fardo</option>
                             </select>
                         </div>
-                        <div className='form-group'>
+                        {/* <div className='form-group'>
                             <label htmlFor="imagem">Imagem do produto</label>
                             <input type="file" name="imagem" id='imagem' className='form-control' onChange={(e) => this.setState({imagem: e.target.value})} required/>
-                        </div>
+                        </div> */}
                         <button type="submit" className='btn-submit' onClick={this.saveProduto}>Salvar</button>
                         <button type="button" className='btn-cancel' onClick={this.checkIfBoxesOpen}>Cancelar</button>
                     </form>

@@ -46,8 +46,8 @@ export default function Navbar(){
         fetch('/Usuario/' + u, requestOptions)
             .then(response => response.json())
             .then(data => {
-                setName(data.nome);
-                setEmail(data.email);
+                setName(data.Nome);
+                setEmail(data.Email);
             });
     }
 

@@ -101,14 +101,14 @@ export default class Estoque extends Component{
                 "produtoId": this.state.produtoId,
                 "campanhaId": this.state.campanhaId,
                 "qtde": this.state.quantidade,
-                "tipo": this.state.movimentacao,
+                "tipo": parseInt(this.state.movimentacao),
                 "observacao": this.state.observacao
             })
         };
         fetch('/Estoque', requestOptions)
             .then(response => {
                 if(response.ok){
-                    response.json().then(data => {
+                    response.text().then(data => {
                         alert("Estoque Salvo!");
                         this.checkIfBoxesOpen();
                     });
@@ -138,12 +138,14 @@ export default class Estoque extends Component{
             fetch('/Produto_Campanha', requestOptions)
                 .then(response => response.json())
                 .then(data => {
-                    
                     var prods = [];
                     for(var i = 0; i < data.length; i++){
-                        console.log(data[i].campanhaId);
-                        if(data[i].campanhaId === campanha){
-                            prods.push(data[i]);
+                        if(data[i].campanhaId == campanha){
+                            fetch('/Produto/' + data[i].produtoId, requestOptions)
+                                .then(response => response.json())
+                                .then(prod => {
+                                    prods.push(prod);
+                                });
                         }
                     }
     
@@ -191,15 +193,15 @@ export default class Estoque extends Component{
                                     <tbody>
                                         { this.state.estoque.map((e) => {
                                             return(
-                                                <tr key={e.id}>
+                                                <tr key={e.Id}>
                                                     <td scope="row">
                                                         <span className='status green'></span>
                                                     </td>
-                                                    <td>{ e.campanha }</td>
-                                                    <td>{ e.produto }</td>
-                                                    <td>{ e.quantidade }</td>
+                                                    <td>{ e.Campanha }</td>
+                                                    <td>{ e.Produto }</td>
+                                                    <td>{ e.Quantidade }</td>
                                                     <td>
-                                                        <button className='btnEdit' onClick={ () => {this.openEditRegister(e.id)}}>
+                                                        <button className='btnEdit' onClick={ () => {this.openEditRegister(e.Id)}}>
                                                             <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 15.2496V18.9996H3.75L14.81 7.93957L11.06 4.18957L0 15.2496ZM17.71 5.03957C18.1 4.64957 18.1 4.01957 17.71 3.62957L15.37 1.28957C14.98 0.89957 14.35 0.89957 13.96 1.28957L12.13 3.11957L15.88 6.86957L17.71 5.03957Z" fill="#444444"/></svg>
                                                         </button>
                                                     </td>
@@ -222,25 +224,25 @@ export default class Estoque extends Component{
                                 <option value="">Nenhuma campanha</option>
                                 { this.state.campanhas.map((c) => {
                                     return(
-                                        <option value={c.id} key={c.id}>{c.nome}</option>
+                                        <option value={c.Id} key={c.Id}>{c.Nome}</option>
                                     );
                                 }) }
                             </select>
                         </div>
                         <div className='form-group'>
                             <label htmlFor="produto">Produto</label>
-                            <select name='produto' className='form-control' onChange={(e) => this.setState({produtoId: e.target.value})} defaultValue={this.state.produtoId}>
+                            <select name='produto' className='form-control' onChange={(e) => this.setState({produtoId: e.target.value})} value={this.state.produtoId}>
                                 <option value="" disabled>Selecione o produto</option>
                                 { this.state.produtos.map((p) => {
                                     return(
-                                        <option value={p.id} key={p.id}>{p.nome}</option>
+                                        <option value={p.Id} key={p.Id}>{p.Nome}</option>
                                     );
                                 }) }
                             </select>
                         </div>
                         <div className='form-group'>
                             <label htmlFor="tipo">Tipo de Movimentação</label>
-                            <select name='tipo' className='form-control' onChange={(e) => this.setState({movimentacao: e.target.value})} defaultValue={this.state.movimentacao}>
+                            <select name='tipo' className='form-control' onChange={(e) => this.setState({movimentacao: e.target.value})} value={this.state.movimentacao}>
                                 <option value="" disabled>Selecione a Movimentação</option>
                                 <option value="1">Entrada</option>
                                 <option value="2">Saída</option>

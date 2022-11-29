@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import imgCampanha from '../../images/admin/campanhaAlimento.jpg';
 import imgArroz from '../../images/admin/arroz.png';
 import imgFeijao from '../../images/feijao.jpg';
 import imgMilho from '../../images/milho.jpg';
@@ -53,8 +54,8 @@ export default class Campanhas extends Component {
             .then(response => response.json())
             .then(data => {
                 for(var i = 0; i < data.length; i++){
-                    data[i].dt_inicio = new Date(data[i].dt_inicio).toLocaleDateString('pt-br');
-                    data[i].dt_fim    = new Date(data[i].dt_fim).toLocaleDateString('pt-br');
+                    data[i].Dt_inicio = new Date(data[i].Dt_inicio).toLocaleDateString('pt-br');
+                    data[i].Dt_fim    = new Date(data[i].Dt_fim).toLocaleDateString('pt-br');
                 }
 
                 this.setState({
@@ -79,10 +80,10 @@ export default class Campanhas extends Component {
 
                 for(var i = 0; i < data.length; i++){
                     prods.push({
-                        value: data[i].id,
-                        label: data[i].nome,
-                        imagem: data[i].imagem,
-                        quantidade: data[i].qtde
+                        value: data[i].Id,
+                        label: data[i].Nome,
+                        imagem: data[i].Imagem,
+                        quantidade: data[i].Qtde
                     });
                 }
 
@@ -107,10 +108,10 @@ export default class Campanhas extends Component {
     }
 
     closeProdAba(){
+        this.getProdsFromCampaign();
         var actives = document.querySelector("#newProd.active");
         actives.classList.remove("active");
         document.querySelector(".overlay").classList.remove("active");
-        this.getProdsFromCampaign();
     }
 
     getProdsFromCampaign() {
@@ -125,13 +126,13 @@ export default class Campanhas extends Component {
         fetch('/Produto_Campanha', requestOptions)
             .then(response => response.json())
             .then(data => {
-                var id = this.state.campanha.id;
+                var id = this.state.campanha.Id;
                 var prod = [];
 
                 for(var i = 0; i < data.length; i++){
-                    if(data[i].campanhaId === id){
+                    if(data[i].CampanhaId === id){
                         for(var j = 0; j < this.state.produtos.length; j++){
-                            if(this.state.produtos[j].value === data[i].produtoId){
+                            if(this.state.produtos[j].value === data[i].ProdutoId){
                                 prod.push(this.state.produtos[j]);
                             }
                         }
@@ -155,8 +156,8 @@ export default class Campanhas extends Component {
         fetch('/Campanha/' + id, requestOptions)
             .then(response => response.json())
             .then(data => {
-                data.dt_inicio = new Date(data.dt_inicio).toLocaleDateString('pt-br');
-                data.dt_fim = new Date(data.dt_fim).toLocaleDateString('pt-br');
+                data.Dt_inicio = new Date(data.Dt_inicio).toLocaleDateString('pt-br');
+                data.Dt_fim = new Date(data.Dt_fim).toLocaleDateString('pt-br');
 
                 this.setState({
                     campanha: data
@@ -178,13 +179,13 @@ export default class Campanhas extends Component {
             },
             body: JSON.stringify({
                 "produtoId": parseInt(this.state.produtoId),
-                "campanhaId": parseInt(this.state.campanha.id),
+                "campanhaId": parseInt(this.state.campanha.Id),
                 "quantidade": parseInt(this.state.qtde)
             })
         };
 
         fetch('/Produto_Campanha', requestOptions)
-            .then(response => response.json())
+            .then(response => response.text())
             .then(data => {
                 alert("Produto Salvo!");
                 this.closeProdAba();
@@ -193,34 +194,22 @@ export default class Campanhas extends Component {
 
     saveCampaign(e){
         e.preventDefault();
-        console.log("saveCampaign");
 
         // let form = new FormData();
-        // form.append('file', this.state.imagem);
+        // form.append('file', document.querySelector("input[type=file]").files[0]);
 
         // const optReq = {
         //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "multipart/form-data",
-        //         'Authorization': 'Bearer ' + this.token
-        //     },
+        //     // headers: {
+        //     //     'Authorization': 'Bearer ' + this.token
+        //     // },
         //     body: form
         // }
 
         // fetch('/api/v1/file/upload', optReq)
-        //     .then(response => {
-        //         if(response.ok){
-        //             response.json().then(
-        //                 success => {
-        //                     this.setState({
-        //                         imagem: success.image
-        //                     })
-        //                 }
-        //             )
-        //         }else{
-        //             console.log("Imagem não salva!");
-        //             console.log(response);
-        //         }
+        //     .then((response) => response.json())
+        //     .then((result) => {
+        //         console.log('Success:', result);
         //     });
 
         const requestOptions = {
@@ -236,10 +225,11 @@ export default class Campanhas extends Component {
                 "dt_fim": this.state.dataFim,
                 "instituicaoId": 1,
                 "ativo": true,
+                "logotipo": this.state.imagem
             })
         };
         fetch('/Campanha', requestOptions)
-            .then(response => response.json())
+            .then(response => response.text())
             .then(data => {
                 // console.log("Salvou campanha " + data.id);
                 // for(var i = 0; i < this.state.produtosSelecionados.length; i++){
@@ -300,17 +290,17 @@ export default class Campanhas extends Component {
                     <div className='row'>
                         { this.state.campanhas.map((c) => {
                             return (
-                                <div className='col-md-4' key={ c.id }>
+                                <div className='col-md-4' key={ c.Id }>
                                     <div className='card'>
                                         <div className='title'>
-                                            <img src={ c.logotipo } alt={ c.nome } className='backCampanha img-fluid'/>
-                                            <h2>{ c.nome }</h2>
+                                            <img src={ imgCampanha } alt={ c.Nome } className='backCampanha img-fluid'/>
+                                            <h2>{ c.Nome }</h2>
                                         </div>
                                         <div className='body'>
-                                            <p className='date'>{ c.dt_inicio } - { c.dt_fim }</p>
-                                            <p className='description'>{ c.descricao }</p>
+                                            <p className='date'>{ c.Dt_inicio } - { c.Dt_fim }</p>
+                                            <p className='description'>{ c.Descricao }</p>
                                         </div>
-                                        <button className='see-more' id={ c.id } onClick={ () => { this.seeProducts(c.id) } }>
+                                        <button className='see-more' id={ c.Id } onClick={ () => { this.seeProducts(c.Id) } }>
                                             <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 7.3748L0 1.3748L1.075 0.299805L6 5.2498L10.925 0.324804L12 1.3998L6 7.3748Z" fill="#444444"/></svg>
                                         </button>
                                     </div>
@@ -322,30 +312,41 @@ export default class Campanhas extends Component {
                         <div className="col-md-12 relative">
                             <div id="productsCampaign">
                                 <div className='banner'>
-                                    <img src={ this.state.campanha.imagem } alt="Banner" className='img-fluid imgBanner'/>
-                                    <h2>{ this.state.campanha.nome }</h2>
+                                    <img src={ imgCampanha } alt="Banner" className='img-fluid imgBanner'/>
+                                    <h2>{ this.state.campanha.Nome }</h2>
                                 </div>
                                 <div className='subtitle'>
-                                    <p className='data'>{ this.state.campanha.dt_inicio } - { this.state.campanha.dt_fim }</p>
-                                    <h3>{ this.state.campanha.descricao }</h3>
+                                    <p className='data'>{ this.state.campanha.Dt_inicio } - { this.state.campanha.Dt_fim }</p>
+                                    <h3>{ this.state.campanha.Descricao }</h3>
                                 </div>
                                 <div className='products'>
                                     <h2>Produtos</h2>
                                     <div className="row">
                                         { this.state.prodCampanhas.map((p) => {
+                                            var classProgress = "";
+                                            var percent = 50 / p.quantidade;
+                                            
+                                            if(percent < 0.3){
+                                                classProgress = "progress-bar bg-danger";
+                                            }else if(percent > 0.3 && percent < 0.7){
+                                                classProgress = "progress-bar bg-warning";
+                                            }else{
+                                                classProgress = "progress-bar bg-success";
+                                            }
+
                                             return (
                                                 <div className="col-md-4" key={p.value}>
                                                     <div className="row">
                                                         <div className="col-md-3">
-                                                            <img src={p.imagem} className={p.label} alt='Imagem arroz'/>
+                                                            <img src={imgArroz} className={p.label} alt='Imagem arroz'/>
                                                         </div>
                                                         <div className="col-md-9 title-img-pequena">
                                                             <p>{p.label}</p>
                                                             <div className="progress">
-                                                                <div className="progress-bar bg-danger" role="progressbar" aria-label="arroz-progress-bar" aria-valuenow="40" aria-valuemin="0" aria-valuemax={p.quantidade}></div>
+                                                                <div className={classProgress} role="progressbar" aria-label="arroz-progress-bar" aria-valuenow="50" aria-valuemin="0" aria-valuemax={p.quantidade}></div>
                                                             </div>
                                                             <p>
-                                                                20 /&nbsp;<b>{p.quantidade}</b>&nbsp;unidades
+                                                                50 /&nbsp;<b>{p.quantidade}</b>&nbsp;unidades
                                                             </p>
                                                         </div>
                                                     </div>
@@ -372,7 +373,7 @@ export default class Campanhas extends Component {
                 <div id="newMov" className='new'>
                     <h2>Adicionar campanha</h2>
                     <span className='line'></span>
-                    <form>
+                    <form onSubmit={ (e) => {this.saveCampaign(e)} } encType="multipart/form-data" method="POST">
                         <div className='form-group'>
                             <label htmlFor="nome">Nome da campanha</label>
                             <input type="text" name="nome" id='nome' className='form-control' onChange={(e) => this.setState({nome: e.target.value})} required/>
@@ -387,11 +388,11 @@ export default class Campanhas extends Component {
                             <br/>
                             <input type="date" name="dataFim" id='dataFim' className='form-control' onChange={(e) => this.setState({dataFim: new Date(e.target.value).toJSON() })}required/>
                         </div>
-                        <div className="form-group">
+                        {/* <div className="form-group">
                             <label htmlFor="imagem">Upload da Imagem da Campanha</label>
                             <input type="file" className="form-control" name="imagem" id="imagem" onChange={(e) => this.setState({imagem: e.target.value})} required/>
-                        </div>
-                        <button type="submit" className='btn-submit' onClick={ (e) => {this.saveCampaign(e)} }>Salvar</button>
+                        </div> */}
+                        <button type="submit" className='btn-submit'>Salvar</button>
                         <button type="button" className='btn-cancel' onClick={ () => {this.checkIfBoxesOpen()} }>Cancelar</button>
                     </form>
                 </div>
@@ -400,8 +401,15 @@ export default class Campanhas extends Component {
                     <span className='line'></span>
                     <form>
                         <div className='form-group'>
-                            <label htmlFor="nomeProd">Nome do produto</label>
-                            <input type="text" name="nomeProd" id='nomeProd' className='form-control' onChange={(e) => this.setState({produtoId: e.target.value})} required/>
+                            <label htmlFor="produto">Produto</label>
+                            <select name='produto' className='form-control' onChange={(e) => this.setState({produtoId: e.target.value})} value={this.state.produtoId}>
+                                <option value="" disabled>Selecione o produto</option>
+                                { this.state.produtos.map((p) => {
+                                    return(
+                                        <option value={p.value} key={p.value}>{p.label}</option>
+                                    );
+                                }) }
+                            </select>
                         </div>
                         <div className="form-group">
                             <label htmlFor="qtde">Quantidade</label>
