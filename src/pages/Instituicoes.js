@@ -84,7 +84,7 @@ export default function Instituicoes(){
                                 <div className='card-instituicoes'>
                                     <div className='img-largura'>
                                         <Link to={"/instituicao/" + instituicao.id} className='barra-link'>
-                                            <img src={instituicao.logotipo} className="img-fluid" alt={'Logo ' + instituicao.name}/>
+                                            <img src={instituicao.logotipo} className="img-fluid" alt={'Logo ' + instituicao.nome}/>
                                         </Link>
                                     </div>
                                     <div className='card-desc-instituicao'>
