@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import LogoIgrAdventista from './../images/igreja-adventista.jpg';
 import MapImg from './../images/map.png';
 import ImgOleo from './../images/oleo.jpg';
@@ -10,6 +10,7 @@ import ImgFeijao from './../images/feijao.jpg';
 import ImgMilho from './../images/milho.jpg';
 import LogoAdra from './../images/adra-logo.jpg';
 import { tab } from '@testing-library/user-event/dist/tab';
+import { useState, useEffect } from 'react';
 
 function focusInput(e){
     var label = document.querySelector('label[for=' + e.target.id + ']');
@@ -53,13 +54,35 @@ function changeTab(props){
 }
 
 export default function Campanha(){
+    const { campanha } = useParams();
+    const [dadosCampanha, setDadosCampanha] = useState({});
+    const [dadosInstituicao, setDadosInstituicao] = useState({});
+
+    useEffect(() => {
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        };
+        fetch(`/Campanha/${campanha}`, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                setDadosCampanha(data);
+            });
+        console.log("DadosCampanhaInstituicaoId",dadosCampanha); //VER depois
+        fetch(`/Instituicao/${dadosCampanha.instituicaoId}`, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                setDadosInstituicao(data);
+            });
+    }, []);
+
     return (
         <section id="campanha-conteudo">
             <section id="banner">
                 <div className='container'>
                     <div className='row'>
                         <div className='col-md-12'>
-                            <h1>Agência Adventista de Desenvolvimento e Recursos Assistenciais </h1>
+                            <h1>{dadosCampanha.nome}</h1>
                             <p>Conheça nossas campanhas e saiba como ajudar os projetos sociais que estão na nossa plataforma, a sua ajuda será muito bem vinda!</p>
                         </div>
                     </div>
@@ -79,14 +102,14 @@ export default function Campanha(){
                             <div id="objetivo" className="content-tab">
                                 <div className='row'>
                                     <div className='col-md-4'>
-                                        <Link to="/campanha/ADRA" className='barra-link'>
-                                            <img src={LogoAdra} className="img-fluid rounded" alt='Logo ADRA'/>
+                                        <Link to={"/campanha/" + dadosCampanha.id} className='barra-link'>
+                                            <img src={dadosCampanha.logotipo} className="img-fluid rounded" alt={'Logo ' + dadosCampanha.nome}/>
                                         </Link>
                                     </div>
                                 
                                     <div className='col-md-8'>
                                         <p>
-                                            Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado. Se popularizou na década de 60, quando a Letraset lançou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker.
+                                            {dadosCampanha.descricao}
                                         </p>
                                     </div>
                                 </div>
@@ -96,28 +119,28 @@ export default function Campanha(){
                                 <div className='row'>
                                     <div className='col-md-12'>
                                         <div className="title-tab">
-                                            <p>Igreja Adventista do Sétimo Dia</p>
+                                            <p>{dadosInstituicao.nome}</p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div className='row'>
                                     <div className='col-md-4'>
-                                        <Link to="/instituicao/igreja-adventista-setimo-dia" className='barra-link'>
-                                            <img src={LogoIgrAdventista} className="img-fluid rounded" alt='Logo ADRA'/>
+                                        <Link to={"/instituicao/" + dadosCampanha.instituicaoId} className='barra-link'>
+                                            <img src={dadosInstituicao.logotipo} className="img-fluid rounded" alt={'Logo ' + dadosInstituicao.nome}/>
                                         </Link>
                                     </div>
                                 
                                     <div className='col-md-8'>
                                         <p>
-                                            Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado. Se popularizou na década de 60, quando a Letraset lançou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker.
+                                            {dadosInstituicao.descricao}
                                         </p>
                                     </div>
                                 </div>
 
                                 <div className="row">
                                     <div className='col-md-4'>
-                                        <Link to="/instituicao/adventista-do-setimo-dia" className='btn-carregar-mais'>Conhecer Instituição</Link>
+                                        <Link to={"/instituicao/" + dadosCampanha.instituicaoId} className='btn-carregar-mais'>Conhecer Instituição</Link>
                                     </div>
                                 </div>
 

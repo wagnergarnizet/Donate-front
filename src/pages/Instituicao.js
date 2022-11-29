@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
-import LogoIgrAdventista from './../images/igreja-adventista.jpg';
+import { Link, useParams } from 'react-router-dom';
 import MapImg from './../images/map.png';
-import LogoAdra from './../images/adra-logo.jpg';
-import { tab } from '@testing-library/user-event/dist/tab';
+// import LogoAdra from './../images/adra-logo.jpg';
+import { useState, useEffect } from 'react';
 
 function focusInput(e){
     var label = document.querySelector('label[for=' + e.target.id + ']');
@@ -47,13 +46,39 @@ function changeTab(props){
 }
 
 export default function Instituicao(){
+    const { instituicao } = useParams();
+    const [dadosInstituicao, setDadosInstituicao] = useState({});
+    const [campanhasInstituicao, setCampanhasInstituicao] = useState([]);
+
+    useEffect(() => {
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        };
+        fetch(`/Instituicao/${instituicao}`, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                setDadosInstituicao(data);
+            });
+        fetch("/Campanha", requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                const listaCampanhasInst = data.filter((campanha) => {
+                    if (instituicao == campanha.instituicaoId)
+                        return campanha;
+                });
+                setCampanhasInstituicao(listaCampanhasInst);
+            });
+    }, []);
+
+
     return (
         <section id="instituicao-conteudo">
             <section id="banner">
                 <div className='container'>
                     <div className='row'>
                         <div className='col-md-12'>
-                            <h1>Igreja Adventista do Sétimo Dia</h1>
+                            <h1>{dadosInstituicao.nome}</h1>
                             <p>Conheça nossas campanhas e saiba como ajudar os projetos sociais que estão na nossa plataforma, a sua ajuda será muito bem vinda!</p>
                         </div>
                     </div>
@@ -73,14 +98,14 @@ export default function Instituicao(){
                             <div id="sobre-nos" className="content-tab">
                                 <div className='row'>
                                     <div className='col-md-4'>
-                                        <Link to="/instituicao/adventista-do-setimo-dia" className='barra-link'>
-                                            <img src={LogoIgrAdventista} className="img-fluid rounded" alt='Logo Igr Adventista'/>
+                                        <Link to={"/instituicao/" + instituicao} className='barra-link'>
+                                            <img src={dadosInstituicao.logotipo} className="img-fluid rounded" alt={'Logo ' + dadosInstituicao.nome}/>
                                         </Link>
                                     </div>
                                 
                                     <div className='col-md-8'>
                                         <p>
-                                            Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado. Se popularizou na década de 60, quando a Letraset lançou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker.
+                                        {dadosInstituicao.descricao}
                                         </p>
                                     </div>
                                 </div>
@@ -94,12 +119,12 @@ export default function Instituicao(){
                                         </div>
                                         <div className="desc-location">
                                             <p>
-                                                Rua: Lorem Input, 127 <br></br>
-                                                Bairro Guaianases, São Paulo - SP <br></br>
-                                                CEP: 000000-000 <br></br>
+                                                Rua: {dadosInstituicao.endereco}, {dadosInstituicao.bairro} <br></br>
+                                                Cidade {dadosInstituicao.cidade} - {dadosInstituicao.estado} <br></br>
+                                                CEP: {dadosInstituicao.cep} <br></br>
                                                 <br></br>
-                                                Telefone: (XX) XXXX-XXXX<br></br>
-                                                WhatsApp: (XX) XXXXX-XXXX<br></br>
+                                                Telefone: {dadosInstituicao.telefone}<br></br>
+                                                WhatsApp: {dadosInstituicao.celular}<br></br>
                                             </p>
                                         </div>
                                     </div>
@@ -116,42 +141,22 @@ export default function Instituicao(){
                                     <div className="title-tab">
                                         <p>Campanhas</p>
                                     </div>
-                                    <div className="col-md-4">
-                                        <div className="card-mini-campanhas">
-                                            <img src={LogoAdra} className="img-fluid" alt='Logo Adra'/>
-                                            <Link to="/campanhas/adventista-do-setimo-dia" className='barra-link'>
-                                                <p>Adventista do Sétimo Dia</p>
-                                                <h3>Recursos assistenciais </h3>
-                                                <span className='icon'>
-                                                    <svg width="20" height="34" viewBox="0 0 20 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.780518 3.4775L14.2567 16.9999L0.780518 30.5224L3.39334 33.1442L19.4824 16.9999L3.39334 0.855713L0.780518 3.4775Z" fill="white"/></svg>
-                                                </span>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-4">
-                                        <div className="card-mini-campanhas">
-                                            <img src={LogoAdra} className="img-fluid" alt='Logo Adra'/>
-                                            <Link to="/campanhas/adventista-do-setimo-dia" className='barra-link'>
-                                                <p>Adventista do Sétimo Dia</p>
-                                                <h3>Recursos assistenciais </h3>
-                                                <span className='icon'>
-                                                    <svg width="20" height="34" viewBox="0 0 20 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.780518 3.4775L14.2567 16.9999L0.780518 30.5224L3.39334 33.1442L19.4824 16.9999L3.39334 0.855713L0.780518 3.4775Z" fill="white"/></svg>
-                                                </span>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-4">
-                                        <div className="card-mini-campanhas">
-                                            <img src={LogoAdra} className="img-fluid" alt='Logo Adra'/>
-                                            <Link to="/campanhas/adventista-do-setimo-dia" className='barra-link'>
-                                                <p>Adventista do Sétimo Dia</p>
-                                                <h3>Recursos assistenciais </h3>
-                                                <span className='icon'>
-                                                    <svg width="20" height="34" viewBox="0 0 20 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.780518 3.4775L14.2567 16.9999L0.780518 30.5224L3.39334 33.1442L19.4824 16.9999L3.39334 0.855713L0.780518 3.4775Z" fill="white"/></svg>
-                                                </span>
-                                            </Link>
-                                        </div>
-                                    </div>
+                                    {campanhasInstituicao.map((campanha) => {
+                                        return (
+                                            <div className="col-md-4" key={campanha.id}>
+                                                <div className="card-mini-campanhas">
+                                                    <img src={campanha.logotipo} className="img-fluid" alt={'Logo ' + campanha.nome}/>
+                                                    <Link to={"/campanha/" + campanha.id} className='barra-link'>
+                                                        <p>{campanha.nome}</p>
+                                                        <h3>Recursos assistenciais </h3>
+                                                        <span className='icon'>
+                                                            <svg width="20" height="34" viewBox="0 0 20 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.780518 3.4775L14.2567 16.9999L0.780518 30.5224L3.39334 33.1442L19.4824 16.9999L3.39334 0.855713L0.780518 3.4775Z" fill="white"/></svg>
+                                                        </span>
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                        )
+                                    }) }
                                 </div>
 
                                 <div className="row">

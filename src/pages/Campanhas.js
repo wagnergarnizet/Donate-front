@@ -80,8 +80,8 @@ export default function Campanhas(){
                             return (<div className='col-md-4' key={campanha.id}>
                                 <div className='card-campanhas'>
                                     <div className='img-largura'>
-                                        <Link to="/campanha/vicentinos" className='barra-link'>
-                                            <img src={campanha.logotipo} className="img-fluid" alt='Logo Igr Adventista'/>
+                                        <Link to={"/campanha/" + campanha.id} className='barra-link'>
+                                            <img src={campanha.logotipo} className="img-fluid" alt={'Logo ' + campanha.nome}/>
                                         </Link>
                                     </div>
                                     <div className='card-desc-campanhas'>
