@@ -157,13 +157,13 @@ export default function FirstStep(){
                             <small id="estadoHelpId" className="text-muted">Estado Incorreto!</small>
                         </div>
                     </div>
-                    <div className='col-md-12'>
+                    {/* <div className='col-md-12'>
                         <div className="form-group">
                             <label htmlFor="logo">Upload do Logotipo</label>
                             <input type="file" className="form-control" name="logo" id="logo" aria-describedby="logohelpId" placeholder="Logotipo" onChange={(e) => setLogotipo(e.target.value)} required/>
                             <small id="logohelpId" className="form-text text-muted">Logo inválido</small>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 <button type="submit" className="btn btn-success">PRÓXIMO PASSO</button>
                 <Link to='/admin/login' className='link-first-access'>Voltar ao Login</Link>
